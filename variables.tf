@@ -20,5 +20,6 @@ variable "vpc" {
     private_subnet_cidr_blocks = list(string)
     db_subnet_cidr_blocks = list(string)
     availability_zone         = list(string)
+    enable_nat_gateway        = bool
   })
 }
