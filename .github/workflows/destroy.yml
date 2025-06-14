@@ -1,9 +1,6 @@
 name: CI/CD for 3-tier Architecture Destroy
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       environment:
@@ -42,6 +39,26 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -var-file=./environments/${{ github.event.inputs.environment }}/main.tfvars -out=tfplan
+     
+      - name: Notify Slack on Plan Success
+        if: success()
+        env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"✅ Terraform *PLAN* succeeded in *${{ github.event.inputs.environment }}* environment."}' \
+            "$SLACK_WEBHOOK_URL"
+
+
+      - name: Notify Slack on Plan Failure
+        if: failure()
+        env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"❌ Terraform *PLAN* failed in *${{ github.event.inputs.environment }}* environment. Check run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"}' \
+            "$SLACK_WEBHOOK_URL"
+
   destroy:
     name: Terraform Apply (Needs Approval)
     runs-on: self-hosted
@@ -69,5 +86,28 @@ jobs:
         run:  |
           terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
         
-      - name: Terraform Apply
+      - name: Terraform Destroy
         run: terraform destroy -var-file=./environments/${{ github.event.inputs.environment }}/main.tfvars -auto-approve
+      
+      - name: Notify Slack on Destroy Success
+        if: success()
+        env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+            ENVIRONMENT: ${{ github.event.inputs.environment }}
+        run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"✅ Terraform *DESTROY* completed in *$ENVIRONMENT* environment.\"}" \
+            "$SLACK_WEBHOOK_URL"
+
+
+
+      - name: Notify Slack on Destroy Failure
+        if: failure()
+        env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+            ENVIRONMENT: ${{ github.event.inputs.environment }}
+            RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+            curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"❌ Terraform *DESTROY* failed in *$ENVIRONMENT* environment.\n🔍 Check run: $RUN_URL\"}" \
+            "$SLACK_WEBHOOK_URL"

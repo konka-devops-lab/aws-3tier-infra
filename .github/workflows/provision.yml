@@ -1,9 +1,9 @@
 name: CI/CD for 3-tier Architecture Provision
 
 on:
-  push:
-    branches:
-      - main
+#   push:
+#     branches:
+#       - main
   workflow_dispatch:
     inputs:
       environment:
