@@ -86,13 +86,6 @@ jobs:
         env:
           TF_PLUGIN_CACHE_DIR: /home/ubuntu/.terraform.d/plugin-cache
         run: terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
-
-
-      - name: Terraform Init with Backend Config
-        env:
-          TF_PLUGIN_CACHE_DIR: /home/ubuntu/.terraform.d/plugin-cache
-        run:  |
-          terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
         
       - name: Terraform Apply
         run: terraform apply -var-file=./environments/${{ github.event.inputs.environment }}/main.tfvars -auto-approve

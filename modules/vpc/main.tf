@@ -165,3 +165,22 @@ resource "aws_nat_gateway" "example" {
 
   depends_on = [aws_internet_gateway.gw]
 }
+
+# Routes
+resource "aws_route" "public_route" {
+  route_table_id            = aws_route_table.public_rt.id
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id                = aws_internet_gateway.gw.id
+}
+
+resource "aws_route" "private_nat_route" {
+  route_table_id            = aws_route_table.private_rt.id
+  destination_cidr_block    = "0.0.0.0/0"
+  nat_gateway_id            = aws_nat_gateway.example[0].id
+}
+
+resource "aws_route" "db_nat_route" {
+  route_table_id            = aws_route_table.db_rt.id
+  destination_cidr_block    = "0.0.0.0/0"
+  nat_gateway_id            = aws_nat_gateway.example[0].id
+}
