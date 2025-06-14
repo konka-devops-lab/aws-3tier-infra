@@ -16,4 +16,5 @@ vpc = {
   private_subnet_cidr_blocks = ["10.1.11.0/24", "10.1.12.0/24"]
   db_subnet_cidr_blocks = ["10.1.21.0/24", "10.1.22.0/24"]
   enable_nat_gateway = true
+  enable_vpc_flow_logs_cw = true
 }

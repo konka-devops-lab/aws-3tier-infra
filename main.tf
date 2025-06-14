@@ -9,4 +9,5 @@ module "vpc" {
   private_subnet_cidr_blocks = var.vpc["private_subnet_cidr_blocks"]
   db_subnet_cidr_blocks     = var.vpc["db_subnet_cidr_blocks"]
   enable_nat_gateway        = var.vpc["enable_nat_gateway"]
+  enable_vpc_flow_logs_cw   = var.vpc["enable_vpc_flow_logs_cw"]
 }

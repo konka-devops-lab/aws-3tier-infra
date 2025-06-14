@@ -184,3 +184,63 @@ resource "aws_route" "db_nat_route" {
   destination_cidr_block    = "0.0.0.0/0"
   nat_gateway_id            = aws_nat_gateway.example[0].id
 }
+
+# VPC Flow Logs CloudWatch
+
+data "aws_iam_policy_document" "assume_role" {
+  count = var.enable_vpc_flow_logs_cw ? 1 : 0
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["vpc-flow-logs.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
+resource "aws_iam_role" "example" {
+  count = var.enable_vpc_flow_logs_cw ? 1 : 0
+  name               = "${local.common_name}-vpc-flow-logs-role-cw"
+  assume_role_policy = data.aws_iam_policy_document.assume_role[0].json
+}
+
+data "aws_iam_policy_document" "example" {
+  count = var.enable_vpc_flow_logs_cw ? 1 : 0
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "logs:DescribeLogGroups",
+      "logs:DescribeLogStreams",
+    ]
+
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role_policy" "example" {
+  count = var.enable_vpc_flow_logs_cw ? 1 : 0
+  name   = "${local.common_name}-vpc-flow-logs-role-cw-policy"
+  role   = aws_iam_role.example[0].id
+  policy = data.aws_iam_policy_document.example[0].json
+}
+resource "aws_flow_log" "example" {
+  count = var.enable_vpc_flow_logs_cw ? 1 : 0
+  iam_role_arn    = aws_iam_role.example[0].arn
+  log_destination = aws_cloudwatch_log_group.example[0].arn
+  traffic_type    = "ALL"
+  vpc_id          = aws_vpc.main.id
+}
+
+resource "aws_cloudwatch_log_group" "example" {
+  count = var.enable_vpc_flow_logs_cw ? 1 : 0
+  name = "${local.common_name}-vpc-flow-logs-role-cw"
+}
+
+

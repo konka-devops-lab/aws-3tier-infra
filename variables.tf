@@ -21,5 +21,6 @@ variable "vpc" {
     db_subnet_cidr_blocks = list(string)
     availability_zone         = list(string)
     enable_nat_gateway        = bool
+    enable_vpc_flow_logs_cw   = bool
   })
 }

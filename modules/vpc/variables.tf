@@ -41,4 +41,8 @@ variable "enable_nat_gateway" {
   description = "Enable NAT Gateway"
   type        = bool
 }
+variable "enable_vpc_flow_logs_cw" {
+  description = "Enable VPC Flow Logs"
+  type        = bool
+}
 
