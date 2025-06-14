@@ -236,6 +236,12 @@ resource "aws_flow_log" "example" {
   log_destination = aws_cloudwatch_log_group.example[0].arn
   traffic_type    = "ALL"
   vpc_id          = aws_vpc.main.id
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "${local.common_name}-vpc-flow-logs-role-cw"
+    }
+  )
 }
 
 resource "aws_cloudwatch_log_group" "example" {
