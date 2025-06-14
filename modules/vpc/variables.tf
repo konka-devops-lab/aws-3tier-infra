@@ -24,5 +24,5 @@ variable "public_subnet_cidr_blocks" {
 
 variable "availability_zone" {
   description = "Availability zone for the public subnets"
-  type        = string
+  type        = list(string)
 }
