@@ -142,7 +142,6 @@ resource "aws_route_table_association" "db_subnet_association" {
 # EIP
 resource "aws_eip" "eip_nat" {
   count = var.enable_nat_gateway ? 1 : 0
-  instance = aws_vpc.main.id
   domain   = "vpc"
   tags = merge(
     var.common_tags,
