@@ -24,3 +24,6 @@ variable "vpc" {
     enable_vpc_flow_logs_cw   = bool
   })
 }
+
+variable "sg" {}
+ 
