@@ -19,28 +19,28 @@ vpc = {
   enable_vpc_flow_logs_cw = true
 }
 
-sg = {
-  base_sg_name = "Bastion"
-  bastion_sg_description = "Bastion SG"
+# sg = {
+#   base_sg_name = "Bastion"
+#   bastion_sg_description = "Bastion SG"
 
-  vpn_sg_name = "VPN"
-  vpn_sg_description = "VPN SG"
+#   vpn_sg_name = "VPN"
+#   vpn_sg_description = "VPN SG"
 
-  rds_sg_name = "RDS"
-  rds_sg_description = "RDS SG"
+#   rds_sg_name = "RDS"
+#   rds_sg_description = "RDS SG"
 
-  elastic_sg_name = "Elastic_Cache"
-  elastic_sg_description = "Elastic_Cache SG"
+#   elastic_sg_name = "Elastic_Cache"
+#   elastic_sg_description = "Elastic_Cache SG"
 
-  backend_sg_name = "Backend"
-  backend_sg_description = "Backend SG"
+#   backend_sg_name = "Backend"
+#   backend_sg_description = "Backend SG"
 
-  internal_alb_sg_name = "Internal-ALB"
-  internal_alb_sg_description = "Internal SG"
+#   internal_alb_sg_name = "Internal-ALB"
+#   internal_alb_sg_description = "Internal SG"
 
-  frontend_sg_name = "Frontend"
-  frontend_sg_description = "Frontend SG"
+#   frontend_sg_name = "Frontend"
+#   frontend_sg_description = "Frontend SG"
 
-  external_alb_sg_name = "External-ALB"
-  external_alb_sg_description = "External_ALB SG"
-}
+#   external_alb_sg_name = "External-ALB"
+#   external_alb_sg_description = "External_ALB SG"
+# }
