@@ -20,17 +20,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Ensure Plugin Cache Directory Exists
-        run: mkdir -p /opt/terraform-plugin-cache
+        run: mkdir -p /home/ubuntu/.terraform.d/plugin-cache
 
       - name: Cache Terraform Plugin Directory
         uses: actions/cache@v4
         with:
-          path: /opt/terraform-plugin-cache
+          path: /home/ubuntu/.terraform.d/plugin-cache
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/*.tf') }}
 
       - name: Terraform Init with Backend Config
         env:
-          TF_PLUGIN_CACHE_DIR: /opt/terraform-plugin-cache
+          TF_PLUGIN_CACHE_DIR: /home/ubuntu/.terraform.d/plugin-cache
         run: terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
 
       - name: Terraform Validate
@@ -74,23 +74,23 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Ensure Plugin Cache Directory Exists
-        run: mkdir -p /opt/terraform-plugin-cache
+        run: mkdir -p /home/ubuntu/.terraform.d/plugin-cache
 
       - name: Cache Terraform Plugin Directory
         uses: actions/cache@v4
         with:
-          path: /opt/terraform-plugin-cache
+          path: /home/ubuntu/.terraform.d/plugin-cache
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/*.tf') }}
 
       - name: Terraform Init with Backend Config
         env:
-          TF_PLUGIN_CACHE_DIR: /opt/terraform-plugin-cache
+          TF_PLUGIN_CACHE_DIR: /home/ubuntu/.terraform.d/plugin-cache
         run: terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
 
 
       - name: Terraform Init with Backend Config
         env:
-          TF_PLUGIN_CACHE_DIR: /opt/terraform-plugin-cache
+          TF_PLUGIN_CACHE_DIR: /home/ubuntu/.terraform.d/plugin-cache
         run:  |
           terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
         
