@@ -138,3 +138,31 @@ resource "aws_route_table_association" "db_subnet_association" {
   subnet_id      = aws_subnet.db_subnets[count.index].id
   route_table_id = aws_route_table.db_rt.id
 }
+
+# EIP
+resource "aws_eip" "eip_nat" {
+  count = var.enable_nat_gateway ? 1 : 0
+  instance = aws_vpc.main.id
+  domain   = "vpc"
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "${local.common_name}-eip"
+    }
+  )
+}
+# NatGW
+resource "aws_nat_gateway" "example" {
+  count = var.enable_nat_gateway ? 1 : 0
+  allocation_id = aws_eip.eip_nat[count.index].id
+  subnet_id     = aws_subnet.public_subnets[0].id
+
+   tags = merge(
+    var.common_tags,
+    {
+      Name = "${local.common_name}-nat-gateway"
+    }
+  )
+
+  depends_on = [aws_internet_gateway.gw]
+}

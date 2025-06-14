@@ -37,3 +37,8 @@ variable "db_subnet_cidr_blocks" {
   type        = list(string)
 }
 
+variable "enable_nat_gateway" {
+  description = "Enable NAT Gateway"
+  type        = bool
+}
+
