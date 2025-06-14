@@ -70,3 +70,15 @@ resource "aws_subnet" "db_subnets" {
   )
 }
 
+resource "aws_db_subnet_group" "default" {
+  name       = "${local.common_name}-db-subnet-group"
+  subnet_ids = [ for db_subnets in aws_subnet.db_subnets : db_subnets.id ]
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "${local.common_name}-db-subnet-group"
+    }
+
+  )
+}
