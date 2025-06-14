@@ -17,6 +17,6 @@ variable "vpc" {
   type = object({
     vpc_cidr_block            = string
     public_subnet_cidr_blocks = list(string)
-    availability_zone         = string
+    availability_zone         = list(string)
   })
 }
