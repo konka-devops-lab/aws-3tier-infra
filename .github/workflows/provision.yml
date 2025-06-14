@@ -1,9 +1,6 @@
 name: CI/CD for 3-tier Architecture Provision
 
 on:
-  # push:
-  #   branches:
-  #     - main
   workflow_dispatch:
     inputs:
       environment:
@@ -19,49 +16,29 @@ jobs:
       run:
         working-directory: .
     steps:
-      # - name: Checkout Repository
-      #   uses: actions/checkout@v4
-      
-      # - name: Ensure Plugin Cache Directory Exists
-      #   run: mkdir -p ~/.terraform.d/plugin-cache
-      
-      # - name: Cache Terraform Plugin Directory
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ~/.terraform.d/plugin-cache
-      #     key: ${{ runner.os }}-terraform-${{ hashFiles('**/*.tf') }}
-
-      # - name: Terraform Init with Backend Config
-      #   env:
-      #     TF_PLUGIN_CACHE_DIR: ~/.terraform.d/plugin-cache
-      #   run: |
-      #     terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
-
-      # - name: Terraform Validate
-      #   run: terraform validate
-
-      # - name: Terraform Plan
-      #   run: terraform plan -var-file=./environments/${{ github.event.inputs.environment }}/main.tfvars -out=tfplan
-
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Ensure Plugin Cache Directory Exists
+        run: mkdir -p /opt/terraform-plugin-cache
 
       - name: Cache Terraform Plugin Directory
         uses: actions/cache@v4
         with:
-          path: ~/.terraform.d/plugin-cache
+          path: /opt/terraform-plugin-cache
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/*.tf') }}
-          restore-keys: |
-            ${{ runner.os }}-terraform-
-
-      - name: Ensure Plugin Cache Directory Exists
-        run: mkdir -p ~/.terraform.d/plugin-cache
 
       - name: Terraform Init with Backend Config
         env:
-          TF_PLUGIN_CACHE_DIR: ~/.terraform.d/plugin-cache
-        run: |
-          terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
+          TF_PLUGIN_CACHE_DIR: /opt/terraform-plugin-cache
+        run: terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -var-file=./environments/${{ github.event.inputs.environment }}/main.tfvars -out=tfplan
+
 
      
       - name: Notify Slack on Plan Success
@@ -95,17 +72,25 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      
+
+      - name: Ensure Plugin Cache Directory Exists
+        run: mkdir -p /opt/terraform-plugin-cache
+
       - name: Cache Terraform Plugin Directory
         uses: actions/cache@v4
         with:
-          path: ~/.terraform.d/plugin-cache
+          path: /opt/terraform-plugin-cache
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/*.tf') }}
+
+      - name: Terraform Init with Backend Config
+        env:
+          TF_PLUGIN_CACHE_DIR: /opt/terraform-plugin-cache
+        run: terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
 
 
       - name: Terraform Init with Backend Config
         env:
-          TF_PLUGIN_CACHE_DIR: ~/.terraform.d/plugin-cache
+          TF_PLUGIN_CACHE_DIR: /opt/terraform-plugin-cache
         run:  |
           terraform init -backend-config=./environments/${{ github.event.inputs.environment }}/backend.tfvars
         
