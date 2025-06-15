@@ -6,7 +6,6 @@ resource "aws_elasticache_serverless_cache" "example" {
   name   = local.name
   description              = "Elastic Cache cluster for Valkey"
   major_engine_version     = var.major_engine_version
-  snapshot_retention_limit = 1
   security_group_ids       = var.security_group_ids
   subnet_ids               = var.subnet_ids
   tags = merge(
@@ -17,13 +16,13 @@ resource "aws_elasticache_serverless_cache" "example" {
   )
 }
 
-resource "aws_route53_record" "www" {
-  zone_id = var.zone_id
-  name    = var.rds_record_name
-  type    = var.record_type
-  ttl     = var.ttl
-  records = [aws_elasticache_serverless_cache.example.endpoint]
-}
+# resource "aws_route53_record" "www" {
+#   zone_id = var.zone_id
+#   name    = var.elasticache_record_name
+#   type    = var.record_type
+#   ttl     = var.ttl
+#   records = [for address in aws_elasticache_serverless_cache.example : address.address]
+# }
 
 
 
