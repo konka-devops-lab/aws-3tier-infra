@@ -22,7 +22,7 @@ module "bastion" {
   common_tags               = var.common_vars["common_tags"]
   
   ami = data.aws_ami.amazon_linux.id
-  security_groups = module.bastion_sg.sg_id
+  security_groups = [module.bastion_sg.sg_id]
   subnet_id = module.vpc.public_subnet_ids[0]
   private_key = data.aws_ssm_parameter.ec2_key.value
   
