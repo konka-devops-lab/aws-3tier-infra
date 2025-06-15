@@ -30,7 +30,7 @@ resource "aws_security_group" "example" {
   tags = merge(
     var.common_tags,
     {
-      Name = "${local.common_name}-vpc"
+      Name = "${local.common_name}-${sg_name}"
     }
   )
 }
