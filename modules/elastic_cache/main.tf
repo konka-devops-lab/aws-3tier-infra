@@ -22,7 +22,7 @@ resource "aws_route53_record" "www" {
   name    = var.rds_record_name
   type    = var.record_type
   ttl     = var.ttl
-  records = [aws_db_instance.default.address]
+  records = [aws_elasticache_serverless_cache.example.endpoint]
 }
 
 

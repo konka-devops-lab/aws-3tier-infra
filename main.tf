@@ -91,7 +91,7 @@ module "elasticache" {
   environment = var.common_vars["environment"]
   project_name = var.common_vars["application_name"]
   common_tags = var.common_vars["common_tags"]
-  security_group_ids = [module.elasticache_sg.sg_id]
+  security_group_ids = [module.elastic_cache_sg.sg_id]
   subnet_ids = [module.vpc.db_subnet_ids]
   valkey_cluster_name = var.elasticache["valkey_cluster_name"]
   engine = var.elasticache["engine"]
