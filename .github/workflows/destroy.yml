@@ -87,28 +87,28 @@ jobs:
       - name: Terraform Destroy
         run: terraform destroy -var-file=./environments/${{ github.event.inputs.environment }}/main.tfvars -auto-approve
 
-      - name: Notify Slack on Destroy Success
-        if: success()
-        env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-            ENVIRONMENT: ${{ github.event.inputs.environment }}
-        run: |
-            curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"✅ Terraform *DESTROY* completed in *$ENVIRONMENT* environment.\"}" \
-            "$SLACK_WEBHOOK_URL"
+      # - name: Notify Slack on Destroy Success
+      #   if: success()
+      #   env:
+      #       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #       ENVIRONMENT: ${{ github.event.inputs.environment }}
+      #   run: |
+      #       curl -X POST -H 'Content-type: application/json' \
+      #       --data "{\"text\":\"✅ Terraform *DESTROY* completed in *$ENVIRONMENT* environment.\"}" \
+      #       "$SLACK_WEBHOOK_URL"
 
 
 
-      - name: Notify Slack on Destroy Failure
-        if: failure()
-        env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-            ENVIRONMENT: ${{ github.event.inputs.environment }}
-            RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-            curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"❌ Terraform *DESTROY* failed in *$ENVIRONMENT* environment.\n🔍 Check run: $RUN_URL\"}" \
-            "$SLACK_WEBHOOK_URL"
+      # - name: Notify Slack on Destroy Failure
+      #   if: failure()
+      #   env:
+      #       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #       ENVIRONMENT: ${{ github.event.inputs.environment }}
+      #       RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      #   run: |
+      #       curl -X POST -H 'Content-type: application/json' \
+      #       --data "{\"text\":\"❌ Terraform *DESTROY* failed in *$ENVIRONMENT* environment.\n🔍 Check run: $RUN_URL\"}" \
+      #       "$SLACK_WEBHOOK_URL"
 
 
 

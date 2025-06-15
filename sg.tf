@@ -84,3 +84,41 @@ resource "aws_security_group_rule" "example" {
   description       = "Allow SSH access from anywhere"
   depends_on        = [module.bastion_sg]
 }
+
+# VPN SG Rules
+resource "aws_security_group_rule" "vpn_ssh" {
+  description       = "This rule allows all traffic from internet on 22"
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.vpn_sg.sg_id
+}
+resource "aws_security_group_rule" "vpn_https" {
+  description       = "This rule allows all traffic from internet on 443"
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.vpn_sg.sg_id
+}
+resource "aws_security_group_rule" "vpn_et" {
+  description       = "This rule allows all traffic from internet on 943"
+  type              = "ingress"
+  from_port         = 943
+  to_port           = 943
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.vpn_sg.sg_id
+}
+resource "aws_security_group_rule" "vpn_udp" {
+  description       = "This rule allows all traffic from internet on 1194"
+  type              = "ingress"
+  from_port         = 1194
+  to_port           = 1194
+  protocol          = "udp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.vpn_sg.sg_id
+}
