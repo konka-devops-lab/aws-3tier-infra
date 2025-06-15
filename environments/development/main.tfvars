@@ -92,9 +92,9 @@ elasticache = {
   valkey_cluster_name = "valkey"
   engine = "valkey"
   major_engine_version = "8"
-  # zone_id                = "Z011675617HENPLWZ1EJC"
-  # elasticache_record_name        = "dev-elasticache"
-  # record_type            = "CNAME"
-  # ttl                    = "60"
+  zone_id                = "Z011675617HENPLWZ1EJC"
+  elasticache_record_name        = "dev-elasticache"
+  record_type            = "CNAME"
+  ttl                    = "60"
 
 }

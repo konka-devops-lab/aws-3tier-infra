@@ -32,22 +32,22 @@ variable "common_tags" {
   default     = {}
 }
 
-# variable "zone_id" {
-#   description = "The ID of the Route 53 hosted zone"
-#   type        = string
-# }
+variable "zone_id" {
+  description = "The ID of the Route 53 hosted zone"
+  type        = string
+}
 
-# variable "elasticache_record_name" {
-#   description = "The name of the Route 53 record for the RDS instance"
-#   type        = string
-# }
+variable "elasticache_record_name" {
+  description = "The name of the Route 53 record for the RDS instance"
+  type        = string
+}
 
-# variable "record_type" {
-#   description = "The type of the Route 53 record"
-#   type        = string
-# }
+variable "record_type" {
+  description = "The type of the Route 53 record"
+  type        = string
+}
 
-# variable "ttl" {
-#   description = "The TTL for the Route 53 record"
-#   type        = number
-# }
+variable "ttl" {
+  description = "The TTL for the Route 53 record"
+  type        = number
+}

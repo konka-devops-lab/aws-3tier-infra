@@ -16,13 +16,13 @@ resource "aws_elasticache_serverless_cache" "example" {
   )
 }
 
-# resource "aws_route53_record" "www" {
-#   zone_id = var.zone_id
-#   name    = var.elasticache_record_name
-#   type    = var.record_type
-#   ttl     = var.ttl
-#   records = [for address in aws_elasticache_serverless_cache.example : address.address]
-# }
+resource "aws_route53_record" "www" {
+  zone_id = var.zone_id
+  name    = var.elasticache_record_name
+  type    = var.record_type
+  ttl     = var.ttl
+  records = [for ep in aws_elasticache_serverless_cache.example.endpoint : ep.address]
+}
 
 
 
