@@ -85,37 +85,37 @@ module "rds" {
   ttl                    = var.rds["ttl"]
 }
 
-module "elasticache" {
-  source = "./modules/elastic_cache"
+# module "elasticache" {
+#   source = "./modules/elastic_cache"
 
-  environment             = var.common_vars["environment"]
-  project_name            = var.common_vars["application_name"]
-  common_tags             = var.common_vars["common_tags"]
-  zone_id                 = var.common_vars["zone_id"]
-  security_group_ids      = [module.elastic_cache_sg.sg_id]
-  subnet_ids              = module.vpc.db_subnet_ids
-  valkey_cluster_name     = var.elasticache["valkey_cluster_name"]
-  engine                  = var.elasticache["engine"]
-  major_engine_version    = var.elasticache["major_engine_version"]
-  elasticache_record_name = var.elasticache["elasticache_record_name"]
-  record_type             = var.elasticache["record_type"]
-  ttl                     = var.elasticache["ttl"]
-  depends_on              = [module.vpc, module.elastic_cache_sg]
-}
+#   environment             = var.common_vars["environment"]
+#   project_name            = var.common_vars["application_name"]
+#   common_tags             = var.common_vars["common_tags"]
+#   zone_id                 = var.common_vars["zone_id"]
+#   security_group_ids      = [module.elastic_cache_sg.sg_id]
+#   subnet_ids              = module.vpc.db_subnet_ids
+#   valkey_cluster_name     = var.elasticache["valkey_cluster_name"]
+#   engine                  = var.elasticache["engine"]
+#   major_engine_version    = var.elasticache["major_engine_version"]
+#   elasticache_record_name = var.elasticache["elasticache_record_name"]
+#   record_type             = var.elasticache["record_type"]
+#   ttl                     = var.elasticache["ttl"]
+#   depends_on              = [module.vpc, module.elastic_cache_sg]
+# }
 
-module internal_load_balancer {
-  source = "./modules/loadbalancer"
+# module internal_load_balancer {
+#   source = "./modules/loadbalancer"
 
-  environment                = var.common_vars["environment"]
-  project_name               = var.common_vars["application_name"]
-  lb_name                    = var.internal_load_balancer["lb_name"]
-  common_tags                = var.common_vars["common_tags"]
-  zone_id                    = var.common_vars["zone_id"]
-  choose_internal_external   = var.internal_load_balancer["choose_internal_external"]
-  load_balancer_type         = var.internal_load_balancer["load_balancer_type"]
-  enable_zonal_shift         = var.internal_load_balancer["enable_zonal_shift"]
-  security_groups            = [module.internal_lb_sg.sg_id]
-  subnets                    = module.vpc.private_subnet_ids
-  enable_deletion_protection = var.internal_load_balancer["enable_deletion_protection"]
-  alb_record_name = var.internal_load_balancer["alb_record_name"]
-}
+#   environment                = var.common_vars["environment"]
+#   project_name               = var.common_vars["application_name"]
+#   lb_name                    = var.internal_load_balancer["lb_name"]
+#   common_tags                = var.common_vars["common_tags"]
+#   zone_id                    = var.common_vars["zone_id"]
+#   choose_internal_external   = var.internal_load_balancer["choose_internal_external"]
+#   load_balancer_type         = var.internal_load_balancer["load_balancer_type"]
+#   enable_zonal_shift         = var.internal_load_balancer["enable_zonal_shift"]
+#   security_groups            = [module.internal_lb_sg.sg_id]
+#   subnets                    = module.vpc.private_subnet_ids
+#   enable_deletion_protection = var.internal_load_balancer["enable_deletion_protection"]
+#   alb_record_name = var.internal_load_balancer["alb_record_name"]
+# }
