@@ -18,33 +18,33 @@ output "db_subnet_ids" {
 
 output "bastion_sg_id" {
   description = "The ID of the bastion security group"
-  value       = module.sg.bastion_sg_id
+  value       = module.bastion_sg.sg_id
 }
 output "vpn_sg_id" {
   description = "The ID of the VPN security group"
-  value       = module.sg.vpn_sg_id
+  value       = module.vpn_sg.sg_id
 }
 output "rds_sg_id" {
   description = "The ID of the RDS security group"
-  value       = module.sg.rds_sg_id
+  value       = module.rds_sg.sg_id
 }
 output "elastic_cache_sg_id" {
   description = "The ID of the Elastic security group"
-  value       = module.sg.elastic_cache_sg_id
+  value       = module.elastic_cache_sg.sg_id
 }
 output "backend_sg_id" {
   description = "The ID of the backend security group"
-  value       = module.sg.backend_sg_id
+  value       = module.backend_sg.sg_id
 }
 output "internal_alb_sg_id" {
   description = "The ID of the internal ALB security group"
-  value       = module.sg.internal_alb_sg_id
+  value       = module.sg.internal_alb_sg.sg_id
 }
 output "external_alb_sg_id" {
   description = "The ID of the external ALB security group"
-  value       = module.sg.external_alb_sg_id
+  value       = module.sg.external_alb_sg.sg_id
 }
 output "frontend_sg_id" {
   description = "The ID of the frontend security group"
-  value       = module.sg.frontend_sg_id
+  value       = module.sg.frontend_sg.sg_id
 }
