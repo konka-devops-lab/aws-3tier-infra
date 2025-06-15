@@ -44,3 +44,22 @@ sg = {
   external_alb_sg_name = "External-ALB"
   external_alb_sg_description = "External_ALB SG"
 }
+
+bastion_ec2 = {
+  instance_name                   = "bastion"
+  instance_type                   = "t3.micro"
+  key_name                        = "siva"
+  monitoring                      = false
+  user_data                       = <<-EOF
+    #!/bin/bash
+     user_data = <<-EOF
+        #!/bin/bash
+        sudo dnf update -y
+        sudo dnf install redis6 -y
+        sudo systemctl enable redis6
+        sudo systemctl start redis6
+    EOF
+  use_null_resource_for_userdata  = true
+  remote_exec_user                = "ec2-user"
+  iam_instance_profile            = ""
+}

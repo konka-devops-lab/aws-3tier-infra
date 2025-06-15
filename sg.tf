@@ -1,3 +1,4 @@
+# SG and SG Rules
 module "bastion_sg" {
   source                    = "./modules/sg"
   environment               = var.common_vars["environment"]

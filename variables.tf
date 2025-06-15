@@ -26,4 +26,16 @@ variable "vpc" {
 }
 
 variable "sg" {}
- 
+variable "bastion_ec2" {
+  description = "EC2 instance configuration variables"
+  type = object({
+    instance_name                   = string
+    instance_type                   = string
+    key_name                        = string
+    monitoring                      = bool
+    user_data                       = optional(string, null)
+    use_null_resource_for_userdata  = bool
+    remote_exec_user                = string
+    iam_instance_profile            = optional(string, "")
+  })
+}
