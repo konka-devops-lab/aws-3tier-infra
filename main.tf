@@ -63,7 +63,7 @@ module "vpn" {
 # RDS
 module "rds" {
   depends_on             = [module.vpc, module.rds_sg]
-  source                 = "../terraform-modules/rds"
+  source                 = "./modules/rds"
   username               = data.aws_ssm_parameter.rds_username.value
   password               = data.aws_ssm_parameter.rds_password.value
   db_subnet_group_name   = module.vpc.db_subnet_group_name
