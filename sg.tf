@@ -135,7 +135,7 @@ resource "aws_security_group_rule" "vpn_rds" {
 }
 
 # Elastic Cache Rules
-resource "aws_security_group_rule" "vpn_rds" {
+resource "aws_security_group_rule" "bastion_elasticache" {
   description       = "This rule allows all traffic from 3306 from VPN"
   type              = "ingress"
   from_port         = 3306
