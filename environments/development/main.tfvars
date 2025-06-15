@@ -71,3 +71,18 @@ vpn_ec2 = {
   monitoring                      = false
   use_null_resource_for_userdata  = false
 }
+
+rds = {
+  allocated_storage      = "20"
+  engine                 = "mysql"
+  engine_version         = "8.0"
+  instance_class         = "db.t3.micro"
+  publicly_accessible    = false
+  skip_final_snapshot    = false
+  identifier             = "expense"
+  storage_type           = "gp3"
+  zone_id                = "Z011675617HENPLWZ1EJC"
+  rds_record_name        = "dev-rds"
+  record_type            = "CNAME"
+  ttl                    = "60"
+}

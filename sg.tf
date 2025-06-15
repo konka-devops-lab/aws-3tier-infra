@@ -122,3 +122,14 @@ resource "aws_security_group_rule" "vpn_udp" {
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = module.vpn_sg.sg_id
 }
+
+# RDS Rules
+resource "aws_security_group_rule" "vpn_rds" {
+  description       = "This rule allows all traffic from 3306 from VPN"
+  type              = "ingress"
+  from_port         = 3306
+  to_port           = 3006
+  protocol          = "tcp"
+  source_security_group_id = module.vpn_sg.sg_id  
+  security_group_id = module.rds_sg.sg_id
+}

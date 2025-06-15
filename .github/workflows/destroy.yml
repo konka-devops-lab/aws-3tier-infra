@@ -38,24 +38,24 @@ jobs:
 
 
      
-      - name: Notify Slack on Plan Success
-        if: success()
-        env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: |
-            curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"✅ Terraform *PLAN* succeeded in *${{ github.event.inputs.environment }}* environment."}' \
-            "$SLACK_WEBHOOK_URL"
+      # - name: Notify Slack on Plan Success
+      #   if: success()
+      #   env:
+      #       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #   run: |
+      #       curl -X POST -H 'Content-type: application/json' \
+      #       --data '{"text":"✅ Terraform *PLAN* succeeded in *${{ github.event.inputs.environment }}* environment."}' \
+      #       "$SLACK_WEBHOOK_URL"
 
 
-      - name: Notify Slack on Plan Failure
-        if: failure()
-        env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: |
-            curl -X POST -H 'Content-type: application/json' \
-            --data '{"text":"❌ Terraform *PLAN* failed in *${{ github.event.inputs.environment }}* environment. Check run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"}' \
-            "$SLACK_WEBHOOK_URL"
+      # - name: Notify Slack on Plan Failure
+      #   if: failure()
+      #   env:
+      #       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #   run: |
+      #       curl -X POST -H 'Content-type: application/json' \
+      #        --data '{"text":"❌ Terraform *PLAN* failed in *${{ github.event.inputs.environment }}* environment. Check run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"}' \
+      #       "$SLACK_WEBHOOK_URL"
   destroy:
     name: Terraform Destroy (Needs Approval)
     runs-on: self-hosted

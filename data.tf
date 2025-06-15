@@ -39,3 +39,9 @@ data "aws_ami" "openvpn" {
     values = ["hvm"]
   }
 }
+data "aws_ssm_parameter" "rds_username" {
+  name = "/example/rds/username"
+}
+data "aws_ssm_parameter" "rds_password" {
+  name = "/example/rds/password"
+}

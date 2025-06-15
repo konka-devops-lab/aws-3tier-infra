@@ -13,7 +13,7 @@ module "vpc" {
   enable_vpc_flow_logs_cw   = var.vpc["enable_vpc_flow_logs_cw"]
 }
 
-
+# Bastion Host
 module "bastion" {
   source = "./modules/ec2"
 
@@ -38,6 +38,7 @@ module "bastion" {
 
 }
 
+# VPN
 module "vpn" {
   source = "./modules/ec2"
 
@@ -57,4 +58,29 @@ module "vpn" {
 
   depends_on = [ module.vpc, module.vpn_sg ]
 
+}
+
+# RDS
+module "rds" {
+  depends_on             = [module.vpc, module.rds_sg]
+  source                 = "../terraform-modules/rds"
+  username               = data.aws_ssm_parameter.rds_username.value
+  password               = data.aws_ssm_parameter.rds_password.value
+  db_subnet_group_name   = module.vpc.db_subnet_group_name
+  vpc_security_group_ids = [module.rds_sg.sg_id]
+  environment            = var.common_vars["environment"]
+  project                = var.common_vars["application_name"]
+  common_tags            = var.common_vars["common_tags"]
+  allocated_storage      = var.rds["allocated_storage"]
+  engine                 = var.rds["engine"]
+  engine_version         = var.rds["engine_version"]
+  instance_class         = var.rds["instance_class"]
+  publicly_accessible    = var.rds["publicly_accessible"]
+  skip_final_snapshot    = var.rds["skip_final_snapshot"]
+  identifier             = var.rds["identifier"]
+  storage_type           = var.rds["storage_type"]
+  zone_id                = var.rds["zone_id"]
+  rds_record_name        = var.rds["rds_record_name"]
+  record_type            = var.rds["record_type"]
+  ttl                    = var.rds["ttl"]
 }
