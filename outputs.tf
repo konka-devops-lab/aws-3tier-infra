@@ -38,13 +38,13 @@ output "backend_sg_id" {
 }
 output "internal_alb_sg_id" {
   description = "The ID of the internal ALB security group"
-  value       = module.sg.internal_alb_sg.sg_id
+  value       = module.internal_alb_sg.sg_id
 }
 output "external_alb_sg_id" {
   description = "The ID of the external ALB security group"
-  value       = module.sg.external_alb_sg.sg_id
+  value       = module.external_alb_sg.sg_id
 }
 output "frontend_sg_id" {
   description = "The ID of the frontend security group"
-  value       = module.sg.frontend_sg.sg_id
+  value       = module.frontend_sg.sg_id
 }
