@@ -64,7 +64,7 @@ bastion_ec2 = {
   iam_instance_profile            = ""
 }
 
-bastion_ec2 = {
+vpn_ec2 = {
   instance_name                   = "vpn"
   instance_type                   = "t3a.small"
   key_name                        = "siva"
