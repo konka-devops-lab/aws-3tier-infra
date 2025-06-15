@@ -87,7 +87,7 @@ rds = {
   ttl                    = "60"
 }
 
-elasticcache = {
+elasticache = {
 
   valkey_cluster_name = "valkey"
   engine = "valkey"
