@@ -8,6 +8,7 @@ common_vars = {
     terraform   = "true"
     Owner       = "konka"
   }
+  zone_id = "Z011675617HENPLWZ1EJC"
 }
 vpc = {
   vpc_cidr_block             = "10.1.0.0/16"
@@ -58,7 +59,6 @@ bastion_ec2 = {
         sudo systemctl enable redis6
         sudo systemctl start redis6
     EOF
-
   use_null_resource_for_userdata = true
   remote_exec_user               = "ec2-user"
   iam_instance_profile           = ""

@@ -13,7 +13,6 @@ resource "aws_vpc" "main" {
     {
       Name = "${local.common_name}-vpc"
     }
-
   )
 }
 
