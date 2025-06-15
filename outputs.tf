@@ -54,7 +54,7 @@ output "rds_endpoint" {
   value       = module.rds.endpoint
 }
 
-# output "elastic_cache_endpoint" {
-#   description = "The endpoint of the Elastic Cache cluster"
-#   value       = module.elasticache.endpoint
-# }
+output "elastic_cache_endpoint" {
+  description = "The endpoint of the Elastic Cache cluster"
+  value       = module.elasticache.endpoint
+}
