@@ -133,3 +133,14 @@ resource "aws_security_group_rule" "vpn_rds" {
   source_security_group_id = module.vpn_sg.sg_id  
   security_group_id = module.rds_sg.sg_id
 }
+
+# Elastic Cache Rules
+resource "aws_security_group_rule" "vpn_rds" {
+  description       = "This rule allows all traffic from 3306 from VPN"
+  type              = "ingress"
+  from_port         = 3306
+  to_port           = 3306
+  protocol          = "tcp"
+  source_security_group_id = module.bastion_sg.sg_id  
+  security_group_id = module.elastic_cache_sg.sg_id
+}
