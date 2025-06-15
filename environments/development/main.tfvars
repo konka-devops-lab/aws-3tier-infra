@@ -63,3 +63,11 @@ bastion_ec2 = {
   remote_exec_user                = "ec2-user"
   iam_instance_profile            = ""
 }
+
+bastion_ec2 = {
+  instance_name                   = "vpn"
+  instance_type                   = "t3a.small"
+  key_name                        = "siva"
+  monitoring                      = false
+  use_null_resource_for_userdata  = false
+}

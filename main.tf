@@ -32,9 +32,29 @@ module "bastion" {
   use_null_resource_for_userdata = var.bastion_ec2["use_null_resource_for_userdata"]
   remote_exec_user = var.bastion_ec2["remote_exec_user"]
   key_name = var.bastion_ec2["key_name"]
-  iam_instance_profile = var.bastion_ec2["iam_instance_profile"]
   user_data = var.bastion_ec2["user_data"]
 
   depends_on = [ module.vpc, module.bastion_sg ]
+
+}
+
+module "vpn" {
+  source = "./modules/ec2"
+
+  environment               = var.common_vars["environment"]
+  project_name              = var.common_vars["application_name"]
+  common_tags               = var.common_vars["common_tags"]
+  
+  ami = data.aws_ami.openvpn.id
+  security_groups = [module.vpn_sg.sg_id]
+  subnet_id = module.vpc.public_subnet_ids[1]
+  
+  instance_name =var.vpn_ec2["instance_name"]
+  instance_type = var.vpn_ec2["instance_type"]
+  monitoring = var.vpn_ec2["monitoring"]
+  use_null_resource_for_userdata = var.vpn_ec2["use_null_resource_for_userdata"]
+  key_name = var.bastion_ec2["key_name"]
+
+  depends_on = [ module.vpc, module.vpn_sg ]
 
 }
