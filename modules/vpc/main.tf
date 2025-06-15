@@ -174,15 +174,17 @@ resource "aws_route" "public_route" {
 }
 
 resource "aws_route" "private_nat_route" {
+  count = var.enable_nat_gateway ? 1 : 0
   route_table_id            = aws_route_table.private_rt.id
   destination_cidr_block    = "0.0.0.0/0"
-  nat_gateway_id            = aws_nat_gateway.example[0].id
+  nat_gateway_id            = aws_nat_gateway.example[count.index].id
 }
 
 resource "aws_route" "db_nat_route" {
+  count = var.enable_nat_gateway ? 1 : 0
   route_table_id            = aws_route_table.db_rt.id
   destination_cidr_block    = "0.0.0.0/0"
-  nat_gateway_id            = aws_nat_gateway.example[0].id
+  nat_gateway_id            = aws_nat_gateway.example[count.index].id
 }
 
 # VPC Flow Logs CloudWatch
