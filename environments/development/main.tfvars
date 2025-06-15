@@ -53,7 +53,7 @@ bastion_ec2 = {
   user_data = <<-EOF
         #!/bin/bash
         sudo dnf update -y
-        # sudo dnf install tmux git tree -y
+        sudo dnf install tmux git tree -y
         sudo dnf install redis6 -y
         sudo systemctl enable redis6
         sudo systemctl start redis6
