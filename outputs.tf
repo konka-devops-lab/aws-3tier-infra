@@ -48,3 +48,13 @@ output "frontend_sg_id" {
   description = "The ID of the frontend security group"
   value       = module.frontend_sg.sg_id
 }
+
+output "rds_endpoint" {
+  description = "The endpoint of the RDS instance"
+  value       = module.rds.endpoint
+}
+
+output "elastic_cache_endpoint" {
+  description = "The endpoint of the Elastic Cache cluster"
+  value       = module.elastic_cache.endpoint
+}
