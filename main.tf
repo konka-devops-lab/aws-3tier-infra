@@ -35,4 +35,6 @@ module "bastion" {
   iam_instance_profile = var.bastion_ec2["iam_instance_profile"]
   user_data = var.bastion_ec2["user_data"]
 
+  depends_on = [ module.vpc, module.bastion_sg ]
+
 }
