@@ -10,4 +10,4 @@ variable "sg" {}
 variable "bastion_ec2" {}
 variable "vpn_ec2" {}
 variable "rds" {}
-variable "elasticache" {}
+# variable "elasticache" {}
