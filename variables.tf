@@ -25,5 +25,5 @@ variable "vpc" {
   })
 }
 
-# variable "sg" {}
+variable "sg" {}
  

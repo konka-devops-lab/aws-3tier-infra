@@ -31,7 +31,7 @@ variable "ingress_rules" {
     protocol    = string
     cidr_blocks = list(string)
   }))
-  default = [{}]
+  default = []
 }
 variable "egress_rules" {
   description = "List of egress rules for the security group"
