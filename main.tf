@@ -96,9 +96,9 @@ module "elasticache" {
   valkey_cluster_name = var.elasticache["valkey_cluster_name"]
   engine = var.elasticache["engine"]
   major_engine_version = var.elasticache["major_engine_version"]
-  depends_on = [module.vpc, module.elasticache_sg]
   zone_id = var.elasticache["zone_id"]
   rds_record_name = var.elasticache["rds_record_name"]
   record_type = var.elasticache["record_type"]
   ttl = var.elasticache["ttl"]
+  depends_on = [module.vpc, module.elastic_cache_sg]
 }
