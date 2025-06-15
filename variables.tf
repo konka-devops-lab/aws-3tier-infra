@@ -8,4 +8,4 @@ variable "common_vars" {}
 variable "vpc" {}
 variable "sg" {}
 variable "bastion_ec2" {}
-variable "vpc_ec2" {}
+variable "vpn_ec2" {}
