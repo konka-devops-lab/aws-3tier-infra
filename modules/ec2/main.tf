@@ -39,3 +39,12 @@ resource "null_resource" "user_data_exec" {
     always_run = timestamp()
   }
 }
+
+
+# userdata was executes during the creation of the instance it does not require ssh access
+# when we are using null_resource for userdata execution it requires ssh access
+
+
+# userdata runs inside the EC2 at launch time and does not need SSH access. 
+# But null_resource with remote-exec connects from Terraform using SSH, so it needs port 22 open, key pair, and public access. 
+# That’s why user_data is more reliable and preferred for initial configuration during provisioning.
