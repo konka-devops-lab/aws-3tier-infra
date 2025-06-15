@@ -2,6 +2,7 @@ locals {
   common_name = "${var.environment}-${var.application_name}"
 }
 resource "aws_security_group" "example" {
+  name = "${local.common_name}-${var.sg_name}"
   description = var.sg_description
   vpc_id      = var.vpc_id
 
@@ -29,7 +30,7 @@ resource "aws_security_group" "example" {
   tags = merge(
     var.common_tags,
     {
-      Name = "${local.common_name}-${sg_name}"
+      Name = "${local.common_name}-${var.sg_name}"
     }
   )
 }
