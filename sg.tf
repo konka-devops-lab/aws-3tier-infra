@@ -135,7 +135,7 @@ resource "aws_security_group_rule" "vpn_rds" {
 }
 
 resource "aws_security_group_rule" "backend_rds" {
-  description              = "This rule allows all traffic from 3306 from VPN"
+  description              = "This rule allows all traffic from 3306 from Backend"
   type                     = "ingress"
   from_port                = 3306
   to_port                  = 3306
@@ -146,7 +146,7 @@ resource "aws_security_group_rule" "backend_rds" {
 
 # Elastic Cache Rules
 resource "aws_security_group_rule" "bastion_elasticache" {
-  description              = "This rule allows all traffic from 3306 from VPN"
+  description              = "This rule allows all traffic from 3306 from Bastion"
   type                     = "ingress"
   from_port                = 6379
   to_port                  = 6379
@@ -154,8 +154,9 @@ resource "aws_security_group_rule" "bastion_elasticache" {
   source_security_group_id = module.bastion_sg.sg_id
   security_group_id        = module.elastic_cache_sg.sg_id
 }
-resource "aws_security_group_rule" "backend_elasticache" {
-  description              = "This rule allows all traffic from 3306 from VPN"
+
+resource "aws_security_group_rule" "bastion_elasticache" {
+  description              = "This rule allows all traffic from 3306 from Backend"
   type                     = "ingress"
   from_port                = 6379
   to_port                  = 6379
