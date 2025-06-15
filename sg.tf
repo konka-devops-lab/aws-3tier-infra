@@ -154,7 +154,7 @@ resource "aws_security_group_rule" "bastion_elasticache" {
   source_security_group_id = module.bastion_sg.sg_id
   security_group_id        = module.elastic_cache_sg.sg_id
 }
-resource "aws_security_group_rule" "bastion_elasticache" {
+resource "aws_security_group_rule" "backend_elasticache" {
   description              = "This rule allows all traffic from 3306 from VPN"
   type                     = "ingress"
   from_port                = 6379
