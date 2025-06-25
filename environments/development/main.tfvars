@@ -1,4 +1,4 @@
-aws_region = "ap-south-1"
+aws_region = "us-east-1"
 common_vars = {
   environment      = "development"
   application_name = "tf-aws-3-tier-infra"
@@ -12,7 +12,7 @@ common_vars = {
 }
 vpc = {
   vpc_cidr_block             = "10.1.0.0/16"
-  availability_zone          = ["ap-south-1a", "ap-south-1b"]
+  availability_zone          = ["us-east-1a", "us-east-1b"]
   public_subnet_cidr_blocks  = ["10.1.1.0/24", "10.1.2.0/24"]
   private_subnet_cidr_blocks = ["10.1.11.0/24", "10.1.12.0/24"]
   db_subnet_cidr_blocks      = ["10.1.21.0/24", "10.1.22.0/24"]
@@ -79,7 +79,6 @@ rds = {
   instance_class      = "db.t3.micro"
   publicly_accessible = false
   skip_final_snapshot = true
-  identifier          = "expense"
   storage_type        = "gp3"
   zone_id             = "Z011675617HENPLWZ1EJC"
   rds_record_name     = "dev-rds"
