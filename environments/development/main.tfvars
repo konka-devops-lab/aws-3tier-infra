@@ -94,3 +94,14 @@ elasticache = {
   record_type             = "CNAME"
   ttl                     = "60"
 }
+
+internal_alb = {
+  enable_deletion_protection = false
+  choose_internal_external   = true
+  enable_zonal_shift         = false
+  load_balancer_type         = "application"
+  tg_port                    = 8080
+  health_check_path          = "/health"
+  enable_http                 = true
+  enable_https                = false
+}

@@ -44,6 +44,7 @@ resource "aws_lb" "test" {
   load_balancer_type = var.load_balancer_type
   security_groups    = var.security_groups
   subnets            = var.subnets
+  enable_zonal_shift = var.enable_zonal_shift
 
   enable_deletion_protection = var.enable_deletion_protection
 
@@ -83,4 +84,47 @@ resource "aws_lb_target_group" "example" {
     },
     var.common_tags
   )
+}
+
+resource "aws_lb_listener" "http" {
+  count             = var.enable_http ? 1 : 0
+  load_balancer_arn = aws_lb.test.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.example.arn
+  }
+}
+resource "aws_lb_listener" "https" {
+  count             = var.enable_https ? 1 : 0
+  load_balancer_arn = aws_lb.test.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.certificate_arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.example.arn
+  }
+}
+
+
+resource "aws_lb_listener" "redirection" {
+  count             = var.enable_https ? 1 : 0
+  load_balancer_arn = aws_lb.test.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
 }

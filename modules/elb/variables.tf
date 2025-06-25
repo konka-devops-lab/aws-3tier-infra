@@ -40,6 +40,10 @@ variable "tg_port" {
   type        = number
 }
 
+variable "enable_zonal_shift" {
+  description = "Enable zonal shift for the ELB."
+  type        = bool
+}
 variable "vpc_id" {
   description = "The VPC ID where the ELB and target group will be created."
   type        = string
@@ -60,4 +64,5 @@ variable "enable_https" {
 variable "certificate_arn" {
   description = "ARN of the SSL certificate for HTTPS listener"
   type        = string  
+  default     = ""
 }

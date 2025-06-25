@@ -85,7 +85,7 @@ module "rds" {
 }
 
 module "elasticache" {
-  source = "./modules/elastic_cache"
+  source                  = "./modules/elastic_cache"
   environment             = var.common_vars["environment"]
   project_name            = var.common_vars["application_name"]
   common_tags             = var.common_vars["common_tags"]
@@ -100,19 +100,20 @@ module "elasticache" {
   depends_on              = [module.vpc, module.elastic_cache_sg]
 }
 
-# module internal_load_balancer {
-#   source = "./modules/loadbalancer"
-
-#   environment                = var.common_vars["environment"]
-#   project_name               = var.common_vars["application_name"]
-#   lb_name                    = var.internal_load_balancer["lb_name"]
-#   common_tags                = var.common_vars["common_tags"]
-#   zone_id                    = var.common_vars["zone_id"]
-#   choose_internal_external   = var.internal_load_balancer["choose_internal_external"]
-#   load_balancer_type         = var.internal_load_balancer["load_balancer_type"]
-#   enable_zonal_shift         = var.internal_load_balancer["enable_zonal_shift"]
-#   security_groups            = [module.internal_lb_sg.sg_id]
-#   subnets                    = module.vpc.private_subnet_ids
-#   enable_deletion_protection = var.internal_load_balancer["enable_deletion_protection"]
-#   alb_record_name = var.internal_load_balancer["alb_record_name"]
-# }
+module "internal-alb" {
+  source                     = "./modules/elb"
+  environment                = var.common_vars["environment"]
+  project                    = var.common_vars["application_name"]
+  common_tags                = var.common_vars["common_tags"]
+  security_groups            = module.internal_alb_sg.sg_id
+  subnets                    = module.vpc.private_subnet_ids
+  vpc_id                     = module.vpc.vpc_i
+  enable_deletion_protection = var.internal_alb["enable_deletion_protection"]
+  choose_internal_external   = var.internal_alb["choose_internal_external"]
+  load_balancer_type         = var.internal_alb["load_balancer_type"]
+  enable_zonal_shift         = var.internal_alb["enable_zonal_shift"]
+  tg_port                    = var.internal_alb["tg_port"]
+  health_check_path          = var.internal_alb["health_check_path"]
+  enable_http                = var.internal_alb["enable_http"]
+  enable_https               = var.internal_alb["enable_https"]
+}
