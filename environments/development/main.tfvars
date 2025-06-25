@@ -96,6 +96,7 @@ elasticache = {
 }
 
 internal_alb = {
+  lb_name                   = "backned"
   enable_deletion_protection = false
   choose_internal_external   = true
   enable_zonal_shift         = false

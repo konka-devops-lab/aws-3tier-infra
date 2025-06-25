@@ -6,6 +6,10 @@ variable "project" {
   description = "The project name for which the ELB is being created."
   type        = string
 }
+variable "lb_name" {
+  description = "The name of the load balancer."
+  type        = string
+}
 variable "choose_internal_external" {
   description = "Choose whether the ELB is internal or external. Set to true for internal, false for external."
   type        = bool

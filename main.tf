@@ -105,9 +105,10 @@ module "internal-alb" {
   environment                = var.common_vars["environment"]
   project                    = var.common_vars["application_name"]
   common_tags                = var.common_vars["common_tags"]
-  security_groups            = module.internal_alb_sg.sg_id
-  subnets                    = module.vpc.private_subnet_ids
+  security_groups            = [module.internal_alb_sg.sg_id]
+  subnets                    = [module.vpc.private_subnet_ids]
   vpc_id                     = module.vpc.vpc_id
+  lb_name                   = var.internal_alb["lb_name"]
   enable_deletion_protection = var.internal_alb["enable_deletion_protection"]
   choose_internal_external   = var.internal_alb["choose_internal_external"]
   load_balancer_type         = var.internal_alb["load_balancer_type"]

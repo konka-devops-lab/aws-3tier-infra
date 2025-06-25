@@ -1,5 +1,5 @@
 locals {
-  name = "${var.environment}-${var.project}"
+  name = "${var.environment}-${var.project}-${var.lb_name}"
   s3_bucket_name = "${local.name}-lb-logs"
 }
 resource "aws_s3_bucket" "example" {
@@ -63,7 +63,7 @@ resource "aws_lb" "test" {
 }
 
 resource "aws_lb_target_group" "example" {    
-  name     = "${var.environment}-${var.project}-tg"
+  name     = local.name
   port     = var.tg_port
   protocol = "HTTP"
   vpc_id   = var.vpc_id
