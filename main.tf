@@ -85,23 +85,21 @@ module "rds" {
   ttl                    = var.rds["ttl"]
 }
 
-# module "elasticache" {
-#   source = "./modules/elastic_cache"
-
-#   environment             = var.common_vars["environment"]
-#   project_name            = var.common_vars["application_name"]
-#   common_tags             = var.common_vars["common_tags"]
-#   zone_id                 = var.common_vars["zone_id"]
-#   security_group_ids      = [module.elastic_cache_sg.sg_id]
-#   subnet_ids              = module.vpc.db_subnet_ids
-#   valkey_cluster_name     = var.elasticache["valkey_cluster_name"]
-#   engine                  = var.elasticache["engine"]
-#   major_engine_version    = var.elasticache["major_engine_version"]
-#   elasticache_record_name = var.elasticache["elasticache_record_name"]
-#   record_type             = var.elasticache["record_type"]
-#   ttl                     = var.elasticache["ttl"]
-#   depends_on              = [module.vpc, module.elastic_cache_sg]
-# }
+module "elasticache" {
+  source = "./modules/elastic_cache"
+  environment             = var.common_vars["environment"]
+  project_name            = var.common_vars["application_name"]
+  common_tags             = var.common_vars["common_tags"]
+  zone_id                 = var.common_vars["zone_id"]
+  security_group_ids      = [module.elastic_cache_sg.sg_id]
+  subnet_ids              = module.vpc.db_subnet_ids
+  engine                  = var.elasticache["engine"]
+  major_engine_version    = var.elasticache["major_engine_version"]
+  elasticache_record_name = var.elasticache["elasticache_record_name"]
+  record_type             = var.elasticache["record_type"]
+  ttl                     = var.elasticache["ttl"]
+  depends_on              = [module.vpc, module.elastic_cache_sg]
+}
 
 # module internal_load_balancer {
 #   source = "./modules/loadbalancer"

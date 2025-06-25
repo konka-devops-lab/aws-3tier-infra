@@ -1,5 +1,5 @@
 locals {
-  name = "${var.environment}-${var.project_name}-${var.valkey_cluster_name}"
+  name = "${var.environment}-${var.project_name}"
 }
 resource "aws_elasticache_serverless_cache" "example" {
   engine = var.engine

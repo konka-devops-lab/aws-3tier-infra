@@ -6,10 +6,7 @@ variable "project_name" {
   description = "The name of the project for the Elastic Cache cluster"
   type        = string
 }
-variable "valkey_cluster_name" {
-  description = "The name of the Valkey cluster"
-  type        = string
-}
+
 variable "engine" {
   description = "The engine for the Elastic Cache cluster"
   type        = string
