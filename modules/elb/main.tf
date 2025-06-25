@@ -39,7 +39,7 @@ resource "aws_s3_bucket_policy" "alb_log_delivery" {
 }
 
 resource "aws_lb" "test" {
-  name               = local.name
+  name               = var.lb_name
   internal           = var.choose_internal_external
   load_balancer_type = var.load_balancer_type
   security_groups    = var.security_groups
