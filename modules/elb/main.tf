@@ -39,7 +39,7 @@ resource "aws_s3_bucket_policy" "alb_log_delivery" {
 }
 
 resource "aws_lb" "test" {
-  name               = var.lb_name
+  name               = local.name
   internal           = var.choose_internal_external
   load_balancer_type = var.load_balancer_type
   security_groups    = var.security_groups
@@ -63,7 +63,7 @@ resource "aws_lb" "test" {
 }
 
 resource "aws_lb_target_group" "example" {    
-  name     = local.name
+  name     = var.lb_name
   port     = var.tg_port
   protocol = "HTTP"
   vpc_id   = var.vpc_id
