@@ -1,4 +1,4 @@
-bucket = "konkas-tf-projects"
+bucket = "tf-statefiles-all-projects"
 key    = "development/tf-aws-3-tier-infra/terraform/state"
-region = "ap-south-1"
+region = "us-east-1"
 #dynamodb_table = var.dynamodb_table_name
