@@ -1,10 +1,10 @@
 locals {
-  name = "${var.environment}-${var.project}-${var.identifier}"
+  name = "${var.environment}-${var.project}"
 }
 resource "aws_db_instance" "default" {
   allocated_storage      = var.allocated_storage
   storage_type           = var.storage_type
-  identifier             = var.identifier
+  identifier             = local.name
   engine                 = var.engine
   engine_version         = var.engine_version
   instance_class         = var.instance_class

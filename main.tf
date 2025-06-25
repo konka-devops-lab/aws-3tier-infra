@@ -78,7 +78,6 @@ module "rds" {
   instance_class         = var.rds["instance_class"]
   publicly_accessible    = var.rds["publicly_accessible"]
   skip_final_snapshot    = var.rds["skip_final_snapshot"]
-  identifier             = var.rds["identifier"]
   storage_type           = var.rds["storage_type"]
   rds_record_name        = var.rds["rds_record_name"]
   record_type            = var.rds["record_type"]

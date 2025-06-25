@@ -52,15 +52,15 @@ variable "alb_record_name" {
   type        = string
 }
 
-# variable "bucket_name" {
-#   description = "The name of the S3 bucket for access logs"
-#   type        = string
-# }
-# variable "prefix" {
-#   description = "The prefix for the access logs in the S3 bucket"
-#   type        = string
-# }
-# variable "logs_enabled" {
-#   description = "Enable access logs for the load balancer"
-#   type        = bool
-# }
+variable "bucket_name" {
+  description = "The name of the S3 bucket for access logs"
+  type        = string
+}
+variable "prefix" {
+  description = "The prefix for the access logs in the S3 bucket"
+  type        = string
+}
+variable "logs_enabled" {
+  description = "Enable access logs for the load balancer"
+  type        = bool
+}

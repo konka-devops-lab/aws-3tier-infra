@@ -10,11 +10,11 @@ resource "aws_lb" "test" {
   enable_zonal_shift = var.enable_zonal_shift
   enable_deletion_protection = var.enable_deletion_protection
 
-#   access_logs {
-#     bucket  = var.bucket_name
-#     prefix  = var.prefix
-#     enabled = var.logs_enabled
-#   }
+  access_logs {
+    bucket  = var.bucket_name
+    prefix  = var.prefix
+    enabled = var.logs_enabled
+  }
 
   tags = merge(
     var.common_tags,
@@ -36,3 +36,40 @@ resource "aws_route53_record" "www" {
   }
 }
 
+resource "aws_lb_listener" "http" {
+  count             = var.enable_http ? 1 : 0
+  load_balancer_arn = aws_lb.test.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.example.arn
+  }
+}
+resource "aws_lb_listener" "https" {
+  count             = var.enable_https ? 1 : 0
+  load_balancer_arn = aws_lb.test.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = var.certificate_arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.example.arn
+  }
+}
+
+variable "enable_http" {
+  description = "Enable HTTP listener"
+  type        = bool  
+}
+variable "enable_https" {
+  description = "Enable HTTPS listener"
+  type        = bool    
+}
+variable "certificate_arn" {
+  description = "ARN of the SSL certificate for HTTPS listener"
+  type        = string  
+}

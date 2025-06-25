@@ -51,10 +51,6 @@ variable "common_tags" {
   description = "Common tags to apply to all resources"
   type        = map(any)
 }
-variable "identifier" {
-  description = "The name of the database"
-  type        = string
-}
 variable "storage_type" {
   description = "The storage type to use for the database instance"
   type        = string
