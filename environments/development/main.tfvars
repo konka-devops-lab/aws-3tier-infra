@@ -114,7 +114,7 @@ lb_acm = {
 }
 
 external_alb = {
-  lb_name                   = "frontend"
+  lb_name                   = "tffrontend"
   enable_deletion_protection = false
   choose_internal_external   = false
   enable_zonal_shift         = false
