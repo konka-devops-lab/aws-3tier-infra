@@ -13,3 +13,4 @@ variable "rds" {}
 variable "elasticache" {}
 variable "internal_alb"{}
 variable "lb_acm" {}
+variable "external_alb" {}
