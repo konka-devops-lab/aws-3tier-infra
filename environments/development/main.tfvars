@@ -106,3 +106,8 @@ internal_alb = {
   enable_http                 = true
   enable_https                = false
 }
+
+lb_acm = {
+  domain_name        = "dev-expesne"
+  validation_method  = "DNS"
+}

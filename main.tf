@@ -118,3 +118,13 @@ module "internal-alb" {
   enable_http                = var.internal_alb["enable_http"]
   enable_https               = var.internal_alb["enable_https"]
 }
+
+module "lb_acm" {
+  source = "./modules/acm"
+  environment        = var.common_vars["environment"]
+  project_name       = var.common_vars["application_name"]
+  common_tags        = var.common_vars["common_tags"]
+  domain_name        = var.acm["domain_name"]
+  validation_method  = var.acm["validation_method"]
+  zone_id            = var.common_vars["zone_id"]
+}

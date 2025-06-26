@@ -57,3 +57,7 @@ output "elastic_cache_endpoint" {
   description = "The endpoint of the Elastic Cache cluster"
   value       = module.elasticache.endpoint
 }
+output "acm_certificate_arn" {
+  description = "The ARN of the ACM certificate"
+  value       = module.lb_acm.certificate_arn
+}
