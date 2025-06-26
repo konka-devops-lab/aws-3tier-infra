@@ -68,8 +68,8 @@ resource "aws_route53_record" "www" {
   type    = "A"
 
   alias {
-    name                   = aws_elb.test.dns_name
-    zone_id                = aws_elb.test.zone_id
+    name                   = aws_lb.test.dns_name
+    zone_id                = aws_lb.test.zone_id
     evaluate_target_health = true
   }
 }
