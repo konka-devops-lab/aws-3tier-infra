@@ -108,6 +108,6 @@ internal_alb = {
 }
 
 lb_acm = {
-  domain_name        = "dev-expesne"
+  domain_name        = "dev-expense.konkas.tech"
   validation_method  = "DNS"
 }
