@@ -105,9 +105,23 @@ internal_alb = {
   health_check_path          = "/health"
   enable_http                 = true
   enable_https                = false
+  record_name                = "dev-backend.konkas.tech"
 }
 
 lb_acm = {
   domain_name        = "dev-expense.konkas.tech"
   validation_method  = "DNS"
+}
+
+external_alb = {
+  lb_name                   = "frontend"
+  enable_deletion_protection = false
+  choose_internal_external   = false
+  enable_zonal_shift         = false
+  load_balancer_type         = "application"
+  tg_port                    = 80
+  health_check_path          = "/"
+  enable_http                 = false
+  enable_https                = true
+  record_name                = "dev-expense.konkas.tech"
 }

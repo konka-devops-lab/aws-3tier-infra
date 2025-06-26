@@ -62,6 +62,18 @@ resource "aws_lb" "test" {
   )
 }
 
+resource "aws_route53_record" "www" {
+  zone_id = var.zone_id
+  name    = var.record_name
+  type    = "A"
+
+  alias {
+    name                   = aws_elb.test.dns_name
+    zone_id                = aws_elb.test.zone_id
+    evaluate_target_health = true
+  }
+}
+
 resource "aws_lb_target_group" "example" {    
   name     = var.lb_name
   port     = var.tg_port

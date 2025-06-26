@@ -70,3 +70,11 @@ variable "certificate_arn" {
   type        = string  
   default     = ""
 }
+variable "zone_id" {
+  description = "The Route 53 zone ID for DNS records."
+  type        = string
+}
+variable "record_name" {
+  description = "The name of the DNS record to create for the ELB."
+  type        = string
+}
