@@ -133,6 +133,15 @@ resource "aws_security_group_rule" "vpn_rds" {
   source_security_group_id = module.vpn_sg.sg_id
   security_group_id        = module.rds_sg.sg_id
 }
+resource "aws_security_group_rule" "bastion_rds" {
+  description              = "This rule allows all traffic from 3306 from bastion"
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  source_security_group_id = module.bastion_sg.sg_id
+  security_group_id        = module.rds_sg.sg_id
+}
 
 resource "aws_security_group_rule" "backend_rds" {
   description              = "This rule allows all traffic from 3306 from Backend"
@@ -163,4 +172,110 @@ resource "aws_security_group_rule" "backend_elasticache" {
   protocol                 = "tcp"
   source_security_group_id = module.backend_sg.sg_id
   security_group_id        = module.elastic_cache_sg.sg_id
+}
+
+# Backend SG Rules
+resource "aws_security_group_rule" "vpn_backend" {
+  description              = "This rule allows all traffic from 8080 from vpn"
+  type                     = "ingress"
+  from_port                = 8080
+  to_port                  = 8080
+  protocol                 = "tcp"
+  source_security_group_id = module.vpn_sg.sg_id
+  security_group_id        = module.backend_sg.sg_id
+}
+
+resource "aws_security_group_rule" "bastion_backend" {
+  description              = "This rule allows all traffic from 8080 from bastion"
+  type                     = "ingress"
+  from_port                = 8080
+  to_port                  = 8080
+  protocol                 = "tcp"
+  source_security_group_id = module.bastion_sg.sg_id
+  security_group_id        = module.backend_sg.sg_id
+}
+resource "aws_security_group_rule" "internal_alb_backend" {
+  description              = "This rule allows all traffic from 8080 from internal_alb_sg"
+  type                     = "ingress"
+  from_port                = 8080
+  to_port                  = 8080
+  protocol                 = "tcp"
+  source_security_group_id = module.internal_alb_sg.sg_id
+  security_group_id        = module.backend_sg.sg_id
+}
+
+# Internal ALB SG Rules
+resource "aws_security_group_rule" "vpn_internal_alb" {
+  description              = "This rule allows all traffic from 80 from vpn"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.vpn_sg.sg_id
+  security_group_id        = module.internal_alb_sg.sg_id
+}
+resource "aws_security_group_rule" "bastion_internal_alb" {
+  description              = "This rule allows all traffic from 80 from bastion"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.bastion_sg.sg_id
+  security_group_id        = module.internal_alb_sg.sg_id
+}
+resource "aws_security_group_rule" "frontend_internal_alb" {
+  description              = "This rule allows all traffic from 80 from fronend"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.frontend_sg.sg_id
+  security_group_id        = module.internal_alb_sg.sg_id
+}
+# Frotend SG Rules
+resource "aws_security_group_rule" "vpn_frontend" {
+  description              = "This rule allows all traffic from 80 from vpn"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.vpn_sg.sg_id
+  security_group_id        = module.frontend_sg.sg_id
+}
+resource "aws_security_group_rule" "bastion_frontend" {
+  description              = "This rule allows all traffic from 80 from bastion"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.bastion_sg.sg_id
+  security_group_id        = module.frontend_sg.sg_id
+}
+resource "aws_security_group_rule" "external_alb_frontend" {
+  description              = "This rule allows all traffic from 80 from external_alb"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  source_security_group_id = module.external_alb_sg.sg_id
+  security_group_id        = module.frontend_sg.sg_id
+}
+# External ALB SG Rules
+resource "aws_security_group_rule" "http_external_external_alb" {
+  description              = "This rule allows all traffic from 80 from http_external"
+  type                     = "ingress"
+  from_port                = 80
+  to_port                  = 80
+  protocol                 = "tcp"
+  cidr_blocks              = ["0.0.0.0/0"]
+  security_group_id        = module.external_alb_sg.sg_id
+}
+resource "aws_security_group_rule" "https_external_external_alb" {
+  description              = "This rule allows all traffic from 80 from https_external"
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  cidr_blocks              = ["0.0.0.0/0"]
+  security_group_id        = module.external_alb_sg.sg_id
 }
