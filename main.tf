@@ -153,3 +153,22 @@ module "external-alb" {
   zone_id                    = var.common_vars["zone_id"]
   record_name                = var.external_alb["record_name"]
 }
+
+module "backend_role"{
+  source = "./modules/iam"
+  environment = var.common_vars["environment"]
+  project_name = var.common_vars["application_name"]
+  common_tags = var.common_vars["common_tags"]
+  role_name = var.backend_role["role_name"]
+  policy_name = var.backend_role["policy_name"]
+  policy_file = "${path.module}/environments/${var.common_vars["environment"]}/policies/backend-policy.json"
+}
+
+# module "backend_asg" {
+#   depends_on = [ module.internal-alb,module.backend_sg ]
+#   source = "./modules/asg"
+#   environment                = var.common_vars["environment"]
+#   project_name               = var.common_vars["application_name"]
+#   common_tags                = var.common_vars["common_tags"]
+#   instance_name              = var.backend_asg["instance_name"]
+# }
