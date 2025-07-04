@@ -28,10 +28,10 @@ output "rds_sg_id" {
   description = "The ID of the RDS security group"
   value       = module.rds_sg.sg_id
 }
-output "elastic_cache_sg_id" {
-  description = "The ID of the Elastic security group"
-  value       = module.elastic_cache_sg.sg_id
-}
+# output "elastic_cache_sg_id" {
+#   description = "The ID of the Elastic security group"
+#   value       = module.elastic_cache_sg.sg_id
+# }
 output "backend_sg_id" {
   description = "The ID of the backend security group"
   value       = module.backend_sg.sg_id
