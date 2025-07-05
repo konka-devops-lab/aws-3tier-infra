@@ -1,9 +1,9 @@
 locals {
   # IAM Role Name: formatted as TitleCase without dashes
-  name = "${title(replace(var.environment, "-", ""))}" + "${title(replace(var.project_name, "-", ""))}" + "${title(replace(var.role_name, "-", ""))}"
+  name = "${title(replace(var.environment, "-", ""))}${title(replace(var.project_name, "-", ""))}${title(replace(var.role_name, "-", ""))}"
 
   # IAM Policy Name: same logic
-  policy_name = "${title(replace(var.environment, "-", ""))}" + "${title(replace(var.project_name, "-", ""))}" + "${title(replace(var.policy_name, "-", ""))}"
+  policy_name = "${title(replace(var.environment, "-", ""))}${title(replace(var.project_name, "-", ""))}${title(replace(var.policy_name, "-", ""))}"
 }
 
 resource "aws_iam_role" "this" {
@@ -12,19 +12,19 @@ resource "aws_iam_role" "this" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [{
-      Action    = "sts:AssumeRole",
-      Effect    = "Allow",
+      Action = "sts:AssumeRole",
+      Effect = "Allow",
       Principal = {
         Service = "ec2.amazonaws.com"
       }
     }]
   })
-    tags = merge(
-        var.common_tags,
-        {
-        Name = local.name
-        }
-    )
+  tags = merge(
+    var.common_tags,
+    {
+      Name = local.name
+    }
+  )
 }
 
 resource "aws_iam_role_policy" "inline_policy" {

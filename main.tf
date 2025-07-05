@@ -122,17 +122,17 @@ module "internal-alb" {
 }
 
 module "lb_acm" {
-  source = "./modules/acm"
-  environment        = var.common_vars["environment"]
-  project_name       = var.common_vars["application_name"]
-  common_tags        = var.common_vars["common_tags"]
-  domain_name        = var.lb_acm["domain_name"]
-  validation_method  = var.lb_acm["validation_method"]
-  zone_id            = var.common_vars["zone_id"]
+  source            = "./modules/acm"
+  environment       = var.common_vars["environment"]
+  project_name      = var.common_vars["application_name"]
+  common_tags       = var.common_vars["common_tags"]
+  domain_name       = var.lb_acm["domain_name"]
+  validation_method = var.lb_acm["validation_method"]
+  zone_id           = var.common_vars["zone_id"]
 }
 
 module "external-alb" {
-  depends_on = [ module.lb_acm ]
+  depends_on                 = [module.lb_acm]
   source                     = "./modules/elb"
   environment                = var.common_vars["environment"]
   project                    = var.common_vars["application_name"]
@@ -154,23 +154,23 @@ module "external-alb" {
   record_name                = var.external_alb["record_name"]
 }
 
-module "backend_role"{
-  source = "./modules/iam"
-  environment = var.common_vars["environment"]
+module "backend_role" {
+  source       = "./modules/iam"
+  environment  = var.common_vars["environment"]
   project_name = var.common_vars["application_name"]
-  common_tags = var.common_vars["common_tags"]
-  role_name = var.backend_role["role_name"]
-  policy_name = var.backend_role["policy_name"]
-  policy_file = "${path.module}/environments/${var.common_vars["environment"]}/policies/backend-policy.json"
+  common_tags  = var.common_vars["common_tags"]
+  role_name    = var.backend_role["role_name"]
+  policy_name  = var.backend_role["policy_name"]
+  policy_file  = "${path.module}/environments/${var.common_vars["environment"]}/policies/backend-policy.json"
 }
-module "backend_role"{
-  source = "./modules/iam"
-  environment = var.common_vars["environment"]
+module "frontend_role" {
+  source       = "./modules/iam"
+  environment  = var.common_vars["environment"]
   project_name = var.common_vars["application_name"]
-  common_tags = var.common_vars["common_tags"]
-  role_name = var.backend_role["role_name"]
-  policy_name = var.backend_role["policy_name"]
-  policy_file = "${path.module}/environments/${var.common_vars["environment"]}/policies/frontend-policy.json"
+  common_tags  = var.common_vars["common_tags"]
+  role_name    = var.frontend_role["role_name"]
+  policy_name  = var.frontend_role["policy_name"]
+  policy_file  = "${path.module}/environments/${var.common_vars["environment"]}/policies/frontend-policy.json"
 }
 
 

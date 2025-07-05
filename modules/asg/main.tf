@@ -36,11 +36,11 @@ resource "aws_launch_template" "foo" {
     resource_type = "instance"
 
     tags = merge(
-    {
-      Name = local.name
-    },
-    var.common_tags
-  )
+      {
+        Name = local.name
+      },
+      var.common_tags
+    )
   }
 
   user_data = var.user_data
@@ -59,7 +59,7 @@ resource "aws_autoscaling_group" "bar" {
     id      = aws_launch_template.foo.id
     version = "$Latest"
   }
-  vpc_zone_identifier       = var.subnet_ids
+  vpc_zone_identifier = var.subnet_ids
 
   instance_maintenance_policy {
     min_healthy_percentage = 90
@@ -98,7 +98,7 @@ resource "aws_autoscaling_group" "bar" {
 resource "aws_autoscaling_policy" "aap" {
   name                   = local.name
   autoscaling_group_name = aws_autoscaling_group.bar.name
-  policy_type = "TargetTrackingScaling"
+  policy_type            = "TargetTrackingScaling"
   target_tracking_configuration {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"

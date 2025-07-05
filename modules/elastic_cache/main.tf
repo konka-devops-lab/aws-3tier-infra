@@ -2,12 +2,12 @@ locals {
   name = "${var.environment}-${var.project_name}"
 }
 resource "aws_elasticache_serverless_cache" "example" {
-  engine = var.engine
-  name   = local.name
-  description              = "Elastic Cache cluster for Valkey"
-  major_engine_version     = var.major_engine_version
-  security_group_ids       = var.security_group_ids
-  subnet_ids               = var.subnet_ids
+  engine               = var.engine
+  name                 = local.name
+  description          = "Elastic Cache cluster for Valkey"
+  major_engine_version = var.major_engine_version
+  security_group_ids   = var.security_group_ids
+  subnet_ids           = var.subnet_ids
   tags = merge(
     var.common_tags,
     {

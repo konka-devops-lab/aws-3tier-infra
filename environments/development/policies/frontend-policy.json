@@ -1,13 +1,13 @@
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "AllowReadAccessToNginxConf",
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetObject"
-      ],
-      "Resource": "arn:aws:s3:::your-bucket-name/path/to/nginx.conf"
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowReadAccessToNginxConf",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": "arn:aws:s3:::vm-s3-nginx-conf/nginx.conf"
+        }
+    ]
 }

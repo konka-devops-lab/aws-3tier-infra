@@ -61,3 +61,27 @@ output "acm_certificate_arn" {
   description = "The ARN of the ACM certificate"
   value       = module.lb_acm.certificate_arn
 }
+output "backend_role_id" {
+  description = "The ID of the backend IAM role"
+  value       = module.backend_role.role_id
+}
+output "backend_role_arn" {
+  description = "The ARN of the backend IAM role"
+  value       = module.backend_role.arn
+}
+output "backend_role_name" {
+  description = "The name of the backend IAM role"
+  value       = module.backend_role.name
+}
+output "frontend_role_id" {
+  description = "The ID of the frontend IAM role"
+  value       = module.frontend_role.role_id
+}
+output "frontend_role_arn" {
+  description = "The ARN of the frontend IAM role"
+  value       = module.frontend_role.arn
+}
+output "frontend_role_name" {
+  description = "The name of the frontend IAM role"
+  value       = module.frontend_role.name
+}

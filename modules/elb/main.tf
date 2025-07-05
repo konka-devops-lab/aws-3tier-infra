@@ -1,9 +1,9 @@
 locals {
-  name = "${var.environment}-${var.project}-${var.lb_name}"
+  name           = "${var.environment}-${var.project}-${var.lb_name}"
   s3_bucket_name = "${local.name}-lb-logs"
 }
 resource "aws_s3_bucket" "example" {
-  bucket = local.s3_bucket_name
+  bucket        = local.s3_bucket_name
   force_destroy = true
   tags = merge(
     {
@@ -21,12 +21,12 @@ resource "aws_s3_bucket_policy" "alb_log_delivery" {
     Version = "2012-10-17"
     Statement = [
       {
-        Sid = "AWSALBLoggingPolicy"
+        Sid    = "AWSALBLoggingPolicy"
         Effect = "Allow"
         Principal = {
           Service = "logdelivery.elasticloadbalancing.amazonaws.com"
         }
-        Action = "s3:PutObject"
+        Action   = "s3:PutObject"
         Resource = "${aws_s3_bucket.example.arn}/${local.name}/AWSLogs/${data.aws_caller_identity.current.account_id}/*"
         Condition = {
           StringEquals = {
@@ -74,7 +74,7 @@ resource "aws_route53_record" "www" {
   }
 }
 
-resource "aws_lb_target_group" "example" {    
+resource "aws_lb_target_group" "example" {
   name     = var.lb_name
   port     = var.tg_port
   protocol = "HTTP"

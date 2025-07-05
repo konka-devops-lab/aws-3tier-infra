@@ -1,24 +1,24 @@
 {
-"Version": "2012-10-17",
-"Statement": [
-    {
-    "Effect": "Allow",
-    "Action": [
-        "ssm:GetParameter",
-        "ssm:GetParameters"
-    ],
-    "Resource": [
-        "arn:aws:ssm:REGION:ACCOUNT_ID:parameter/test/crud/*"
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:GetParameter",
+                "ssm:GetParameters"
+            ],
+            "Resource": [
+                "arn:aws:ssm:us-east-1:522814728660:parameter/test/crud/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetSecretValue"
+            ],
+            "Resource": [
+                "arn:aws:secretsmanager:us-east-1:522814728660:secret:test/curd/db_crentials-KzEK0r"
+            ]
+        }
     ]
-    },
-    {
-    "Effect": "Allow",
-    "Action": [
-        "secretsmanager:GetSecretValue"
-    ],
-    "Resource": [
-        "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:crud/db/credentials-??????"
-    ]
-    }
-]
 }

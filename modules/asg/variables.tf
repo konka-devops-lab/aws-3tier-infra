@@ -64,7 +64,7 @@ variable "subnet_ids" {
 variable "target_group_arns" {
   description = "List of target group ARNs for the ASG"
   type        = list(string)
-  default     = []  
+  default     = []
 }
 variable "target_value" {
   description = "Target value for the ASG's scaling policy"

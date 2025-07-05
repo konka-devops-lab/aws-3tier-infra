@@ -17,7 +17,7 @@ variable "domain_name" {
 }
 variable "validation_method" {
   description = "The validation method for Certificate"
-  type = string
+  type        = string
 }
 variable "zone_id" {
   description = "The Route 53 zone ID for DNS validation."

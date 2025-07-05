@@ -59,15 +59,15 @@ variable "health_check_path" {
 }
 variable "enable_http" {
   description = "Enable HTTP listener"
-  type        = bool  
+  type        = bool
 }
 variable "enable_https" {
   description = "Enable HTTPS listener"
-  type        = bool    
+  type        = bool
 }
 variable "certificate_arn" {
   description = "ARN of the SSL certificate for HTTPS listener"
-  type        = string  
+  type        = string
   default     = ""
 }
 variable "zone_id" {

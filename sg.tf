@@ -262,20 +262,20 @@ resource "aws_security_group_rule" "external_alb_frontend" {
 }
 # External ALB SG Rules
 resource "aws_security_group_rule" "http_external_external_alb" {
-  description              = "This rule allows all traffic from 80 from http_external"
-  type                     = "ingress"
-  from_port                = 80
-  to_port                  = 80
-  protocol                 = "tcp"
-  cidr_blocks              = ["0.0.0.0/0"]
-  security_group_id        = module.external_alb_sg.sg_id
+  description       = "This rule allows all traffic from 80 from http_external"
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.external_alb_sg.sg_id
 }
 resource "aws_security_group_rule" "https_external_external_alb" {
-  description              = "This rule allows all traffic from 80 from https_external"
-  type                     = "ingress"
-  from_port                = 443
-  to_port                  = 443
-  protocol                 = "tcp"
-  cidr_blocks              = ["0.0.0.0/0"]
-  security_group_id        = module.external_alb_sg.sg_id
+  description       = "This rule allows all traffic from 80 from https_external"
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.external_alb_sg.sg_id
 }

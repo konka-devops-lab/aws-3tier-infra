@@ -47,11 +47,11 @@ sg = {
 }
 
 bastion_ec2 = {
-  instance_name = "bastion"
-  instance_type = "t3.micro"
-  key_name      = "siva"
-  monitoring    = false
-  user_data     = <<-EOF
+  instance_name                  = "bastion"
+  instance_type                  = "t3.micro"
+  key_name                       = "siva"
+  monitoring                     = false
+  user_data                      = <<-EOF
         #!/bin/bash
         sudo dnf update -y
         sudo dnf install tmux git tree -y
@@ -96,22 +96,23 @@ elasticache = {
 }
 
 internal_alb = {
-  lb_name                   = "backned"
+  lb_name                    = "backned"
   enable_deletion_protection = false
   choose_internal_external   = true
   enable_zonal_shift         = false
   load_balancer_type         = "application"
   tg_port                    = 8080
   health_check_path          = "/health"
-  enable_http                 = true
-  enable_https                = false
+  enable_http                = true
+  enable_https               = false
   record_name                = "dev-backend.konkas.tech"
 }
 
 lb_acm = {
-  domain_name        = "dev-expense.konkas.tech"
-  validation_method  = "DNS"
+  domain_name       = "dev-expense.konkas.tech"
+  validation_method = "DNS"
 }
+
 
 external_alb = {
   lb_name                   = "tffrontend"
@@ -124,4 +125,14 @@ external_alb = {
   enable_http                 = false
   enable_https                = true
   record_name                = "dev-expense.konkas.tech"
+}
+
+backend_role = {
+  role_name   = "BackendSecretsParameterStore"
+  policy_name = "BackendSecretsParameterStorePolicy"
+}
+
+frontend_role = {
+  role_name   = "FrontendNgincConf"
+  policy_name = "FrontendNgincConfPolicy"
 }

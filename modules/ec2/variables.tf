@@ -54,16 +54,16 @@ variable "use_null_resource_for_userdata" {
 variable "remote_exec_user" {
   description = "The user to use for remote execution"
   type        = string
-  default = ""
+  default     = ""
 }
 
 variable "private_key" {
   description = "The path to the private key file"
   type        = string
-  default = ""
+  default     = ""
 }
 variable "iam_instance_profile" {
   description = "IAM instance profile to attach to the instance"
   type        = string
-  default = ""
+  default     = ""
 }

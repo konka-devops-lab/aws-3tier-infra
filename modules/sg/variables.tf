@@ -11,8 +11,8 @@ variable "sg_name" {
   type        = string
 }
 variable "sg_description" {
-    description = "Description of the security group"
-    type        = string
+  description = "Description of the security group"
+  type        = string
 }
 variable "vpc_id" {
   description = "ID of the VPC to which the security group will be attached"
@@ -42,11 +42,11 @@ variable "egress_rules" {
     protocol    = string
     cidr_blocks = list(string)
   }))
-  default = [ {
+  default = [{
     description = "Allow all outbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [ "0.0.0.0/0" ]
-  } ]
+    cidr_blocks = ["0.0.0.0/0"]
+  }]
 }

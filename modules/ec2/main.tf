@@ -8,7 +8,7 @@ resource "aws_instance" "example" {
   vpc_security_group_ids = var.security_groups
   monitoring             = var.monitoring
   subnet_id              = var.subnet_id
-  iam_instance_profile = var.iam_instance_profile
+  iam_instance_profile   = var.iam_instance_profile
   # user_data = var.user_data != null ? var.user_data : null
   tags = merge(
     {
@@ -36,7 +36,7 @@ resource "null_resource" "user_data_exec" {
   }
 
   depends_on = [aws_instance.example]
-   triggers = {
+  triggers = {
     always_run = timestamp()
   }
 }
