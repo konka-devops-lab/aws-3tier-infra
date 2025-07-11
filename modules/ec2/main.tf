@@ -16,9 +16,6 @@ resource "aws_instance" "example" {
     },
     var.common_tags
   )
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "null_resource" "user_data_exec" {

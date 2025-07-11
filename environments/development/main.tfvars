@@ -16,9 +16,16 @@ vpc = {
   public_subnet_cidr_blocks  = ["10.1.1.0/24", "10.1.2.0/24"]
   private_subnet_cidr_blocks = ["10.1.11.0/24", "10.1.12.0/24"]
   db_subnet_cidr_blocks      = ["10.1.21.0/24", "10.1.22.0/24"]
-  enable_nat_gateway         = false
+  enable_nat_gateway         = true
   enable_vpc_flow_logs_cw    = false
 }
+# parameter_store = {
+#   parameters = {
+#     DB_HOST = "dev-rds.konkas.tech"
+#     DB_NAME = "crud_app"
+#     REDIS_HOST = "dev-elasticache.konkas.tech"
+#   }
+# }
 
 sg = {
   bastion_sg_name        = "Bastion"
@@ -64,13 +71,13 @@ bastion_ec2 = {
   iam_instance_profile           = ""
 }
 
-vpn_ec2 = {
-  instance_name                  = "vpn"
-  instance_type                  = "t3a.small"
-  key_name                       = "siva"
-  monitoring                     = false
-  use_null_resource_for_userdata = false
-}
+# vpn_ec2 = {
+#   instance_name                  = "vpn"
+#   instance_type                  = "t3a.small"
+#   key_name                       = "siva"
+#   monitoring                     = false
+#   use_null_resource_for_userdata = false
+# }
 
 rds = {
   allocated_storage   = "20"
@@ -95,44 +102,44 @@ elasticache = {
   ttl                     = "60"
 }
 
-internal_alb = {
-  lb_name                    = "backned"
-  enable_deletion_protection = false
-  choose_internal_external   = true
-  enable_zonal_shift         = false
-  load_balancer_type         = "application"
-  tg_port                    = 8080
-  health_check_path          = "/health"
-  enable_http                = true
-  enable_https               = false
-  record_name                = "dev-backend.konkas.tech"
-}
+# # internal_alb = {
+# #   lb_name                    = "backned"
+# #   enable_deletion_protection = false
+# #   choose_internal_external   = true
+# #   enable_zonal_shift         = false
+# #   load_balancer_type         = "application"
+# #   tg_port                    = 8080
+# #   health_check_path          = "/health"
+# #   enable_http                = true
+# #   enable_https               = false
+# #   record_name                = "dev-backend.konkas.tech"
+# # }
 
-lb_acm = {
-  domain_name       = "dev-expense.konkas.tech"
-  validation_method = "DNS"
-}
+# # lb_acm = {
+# #   domain_name       = "dev-expense.konkas.tech"
+# #   validation_method = "DNS"
+# # }
 
 
-external_alb = {
-  lb_name                   = "tffrontend"
-  enable_deletion_protection = false
-  choose_internal_external   = false
-  enable_zonal_shift         = false
-  load_balancer_type         = "application"
-  tg_port                    = 80
-  health_check_path          = "/"
-  enable_http                 = false
-  enable_https                = true
-  record_name                = "dev-expense.konkas.tech"
-}
+# # external_alb = {
+# #   lb_name                   = "tffrontend"
+# #   enable_deletion_protection = false
+# #   choose_internal_external   = false
+# #   enable_zonal_shift         = false
+# #   load_balancer_type         = "application"
+# #   tg_port                    = 80
+# #   health_check_path          = "/"
+# #   enable_http                 = false
+# #   enable_https                = true
+# #   record_name                = "dev-expense.konkas.tech"
+# # }
 
-backend_role = {
-  role_name   = "BackendSecretsParameterStore"
-  policy_name = "BackendSecretsParameterStorePolicy"
-}
+# # backend_role = {
+# #   role_name   = "BackendSecretsParameterStore"
+# #   policy_name = "BackendSecretsParameterStorePolicy"
+# # }
 
-frontend_role = {
-  role_name   = "FrontendNgincConf"
-  policy_name = "FrontendNgincConfPolicy"
-}
+# # frontend_role = {
+# #   role_name   = "FrontendNgincConf"
+# #   policy_name = "FrontendNgincConfPolicy"
+# # }
