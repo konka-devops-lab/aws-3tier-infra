@@ -17,9 +17,10 @@ variable "instance_name" {
   description = "Instance name for tagging resources"
   type        = string
 }
-variable "insance_profile" {
-  description = "IAM instance profile name to attach to the launch template"
+variable "iam_instance_profile_arn" {
+  description = "ARN of the IAM instance profile to attach to the launch template"
   type        = string
+  
 }
 variable "instance_type" {
   description = "Instance type for the launch template"
@@ -36,7 +37,6 @@ variable "key_name" {
 variable "user_data" {
   description = "User data script to run on instance launch"
   type        = string
-  default     = null
 }
 variable "security_groups" {
   description = "List of security group IDs to associate with the launch template"
@@ -69,4 +69,9 @@ variable "target_group_arns" {
 variable "target_value" {
   description = "Target value for the ASG's scaling policy"
   type        = number
+}
+
+variable "monitoring_enable" {
+  description = "Enable detailed monitoring for the instances"
+  type        = bool
 }

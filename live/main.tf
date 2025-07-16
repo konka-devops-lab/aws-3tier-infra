@@ -13,13 +13,6 @@ module "vpc" {
   enable_vpc_flow_logs_cw    = var.vpc["enable_vpc_flow_logs_cw"]
 }
 
-# module "paramterstore" {
-#   source       = "./modules/parameterstore"
-#   environment  = var.common_vars["environment"]
-#   project_name = var.common_vars["application_name"]
-#   common_tags  = var.common_vars["common_tags"]
-#   parameters   = var.parameter_store["parameters"]
-# }
 # Bastion Host
 module "bastion" {
   source = "../modules/ec2"
@@ -107,86 +100,100 @@ module "elasticache" {
   depends_on              = [module.vpc, module.elastic_cache_sg]
 }
 
-# module "internal-alb" {
-#   source                     = "./modules/elb"
-#   environment                = var.common_vars["environment"]
-#   project                    = var.common_vars["application_name"]
-#   common_tags                = var.common_vars["common_tags"]
-#   security_groups            = [module.internal_alb_sg.sg_id]
-#   subnets                    = module.vpc.private_subnet_ids
-#   vpc_id                     = module.vpc.vpc_id
-#   lb_name                    = var.internal_alb["lb_name"]
-#   enable_deletion_protection = var.internal_alb["enable_deletion_protection"]
-#   choose_internal_external   = var.internal_alb["choose_internal_external"]
-#   load_balancer_type         = var.internal_alb["load_balancer_type"]
-#   enable_zonal_shift         = var.internal_alb["enable_zonal_shift"]
-#   tg_port                    = var.internal_alb["tg_port"]
-#   health_check_path          = var.internal_alb["health_check_path"]
-#   enable_http                = var.internal_alb["enable_http"]
-#   enable_https               = var.internal_alb["enable_https"]
-#   zone_id                    = var.common_vars["zone_id"]
-#   record_name                = var.internal_alb["record_name"]
-# }
+module "internal-alb" {
+  source                     = "../modules/elb"
+  environment                = var.common_vars["environment"]
+  project                    = var.common_vars["application_name"]
+  common_tags                = var.common_vars["common_tags"]
+  security_groups            = [module.internal_alb_sg.sg_id]
+  subnets                    = module.vpc.private_subnet_ids
+  vpc_id                     = module.vpc.vpc_id
+  lb_name                    = var.internal_alb["lb_name"]
+  enable_deletion_protection = var.internal_alb["enable_deletion_protection"]
+  choose_internal_external   = var.internal_alb["choose_internal_external"]
+  load_balancer_type         = var.internal_alb["load_balancer_type"]
+  enable_zonal_shift         = var.internal_alb["enable_zonal_shift"]
+  tg_port                    = var.internal_alb["tg_port"]
+  health_check_path          = var.internal_alb["health_check_path"]
+  enable_http                = var.internal_alb["enable_http"]
+  enable_https               = var.internal_alb["enable_https"]
+  zone_id                    = var.common_vars["zone_id"]
+  record_name                = var.internal_alb["record_name"]
+}
 
-# module "lb_acm" {
-#   source            = "./modules/acm"
-#   environment       = var.common_vars["environment"]
-#   project_name      = var.common_vars["application_name"]
-#   common_tags       = var.common_vars["common_tags"]
-#   domain_name       = var.lb_acm["domain_name"]
-#   validation_method = var.lb_acm["validation_method"]
-#   zone_id           = var.common_vars["zone_id"]
-# }
+module "lb_acm" {
+  source            = "../modules/acm"
+  environment       = var.common_vars["environment"]
+  project_name      = var.common_vars["application_name"]
+  common_tags       = var.common_vars["common_tags"]
+  domain_name       = var.lb_acm["domain_name"]
+  validation_method = var.lb_acm["validation_method"]
+  zone_id           = var.common_vars["zone_id"]
+}
 
-# module "external-alb" {
-#   depends_on                 = [module.lb_acm]
-#   source                     = "./modules/elb"
-#   environment                = var.common_vars["environment"]
-#   project                    = var.common_vars["application_name"]
-#   common_tags                = var.common_vars["common_tags"]
-#   security_groups            = [module.external_alb_sg.sg_id]
-#   subnets                    = module.vpc.public_subnet_ids
-#   vpc_id                     = module.vpc.vpc_id
-#   lb_name                    = var.external_alb["lb_name"]
-#   enable_deletion_protection = var.external_alb["enable_deletion_protection"]
-#   choose_internal_external   = var.external_alb["choose_internal_external"]
-#   load_balancer_type         = var.external_alb["load_balancer_type"]
-#   enable_zonal_shift         = var.external_alb["enable_zonal_shift"]
-#   tg_port                    = var.external_alb["tg_port"]
-#   health_check_path          = var.external_alb["health_check_path"]
-#   enable_http                = var.external_alb["enable_http"]
-#   enable_https               = var.external_alb["enable_https"]
-#   certificate_arn            = module.lb_acm.certificate_arn
-#   zone_id                    = var.common_vars["zone_id"]
-#   record_name                = var.external_alb["record_name"]
-# }
+module "external-alb" {
+  depends_on                 = [module.lb_acm]
+  source                     = "../modules/elb"
+  environment                = var.common_vars["environment"]
+  project                    = var.common_vars["application_name"]
+  common_tags                = var.common_vars["common_tags"]
+  security_groups            = [module.external_alb_sg.sg_id]
+  subnets                    = module.vpc.public_subnet_ids
+  vpc_id                     = module.vpc.vpc_id
+  lb_name                    = var.external_alb["lb_name"]
+  enable_deletion_protection = var.external_alb["enable_deletion_protection"]
+  choose_internal_external   = var.external_alb["choose_internal_external"]
+  load_balancer_type         = var.external_alb["load_balancer_type"]
+  enable_zonal_shift         = var.external_alb["enable_zonal_shift"]
+  tg_port                    = var.external_alb["tg_port"]
+  health_check_path          = var.external_alb["health_check_path"]
+  enable_http                = var.external_alb["enable_http"]
+  enable_https               = var.external_alb["enable_https"]
+  certificate_arn            = module.lb_acm.certificate_arn
+  zone_id                    = var.common_vars["zone_id"]
+  record_name                = var.external_alb["record_name"]
+}
 
-# module "backend_role" {
-#   source       = "./modules/iam"
+module "backend_role" {
+  source       = "../modules/iam"
+  environment  = var.common_vars["environment"]
+  project_name = var.common_vars["application_name"]
+  common_tags  = var.common_vars["common_tags"]
+  role_name    = var.backend_role["role_name"]
+  policy_name  = var.backend_role["policy_name"]
+  policy_file  = "${path.module}/../environments/${var.common_vars["environment"]}/policies/backend-policy.json"
+}
+module "frontend_role" {
+  source       = "../modules/iam"
+  environment  = var.common_vars["environment"]
+  project_name = var.common_vars["application_name"]
+  common_tags  = var.common_vars["common_tags"]
+  role_name    = var.frontend_role["role_name"]
+  policy_name  = var.frontend_role["policy_name"]
+  policy_file  = "${path.module}/../environments/${var.common_vars["environment"]}/policies/frontend-policy.json"
+}
+
+# module "backend_asg" {
+#   source = "../modules/asg"
+
 #   environment  = var.common_vars["environment"]
 #   project_name = var.common_vars["application_name"]
 #   common_tags  = var.common_vars["common_tags"]
-#   role_name    = var.backend_role["role_name"]
-#   policy_name  = var.backend_role["policy_name"]
-#   policy_file  = "${path.module}/environments/${var.common_vars["environment"]}/policies/backend-policy.json"
+
+#   key_name                 = var.bastion_ec2["key_name"]
+#   instance_type            = var.bastion_ec2["instance_type"]
+#   iam_instance_profile_arn = module.backend_role.arn
+#   image_id                 = data.aws_ami.amazon_linux.id
+#   subnet_ids               = module.vpc.private_subnet_ids
+#   target_group_arns        = [module.external-alb.target_group_arn]
+#   security_groups          = [module.backend_sg.sg_id]
+#   monitoring_enable        = var.backend_asg["monitoring_enable"]
+#   instance_name            = var.backend_asg["instance_name"]
+#   user_data                = var.backend_asg["user_data"]
+#   max_size                 = var.backend_asg["max_size"]
+#   min_size                 = var.backend_asg["min_size"]
+#   desired_capacity         = var.backend_asg["desired_capacity"]
+#   target_value             = var.backend_asg["target_value"]
+
+#   depends_on = [module.vpc, module.backend_sg, module.backend_role]
 # }
-# module "frontend_role" {
-#   source       = "./modules/iam"
-#   environment  = var.common_vars["environment"]
-#   project_name = var.common_vars["application_name"]
-#   common_tags  = var.common_vars["common_tags"]
-#   role_name    = var.frontend_role["role_name"]
-#   policy_name  = var.frontend_role["policy_name"]
-#   policy_file  = "${path.module}/environments/${var.common_vars["environment"]}/policies/frontend-policy.json"
-# }
-
-
-
-# # module "backend_asg" {
-# #   depends_on = [ module.internal-alb,module.backend_sg ]
-# #   source = "./modules/asg"
-# #   environment                = var.common_vars["environment"]
-# #   project_name               = var.common_vars["application_name"]
-# #   common_tags                = var.common_vars["common_tags"]
-# #   instance_name              = var.backend_asg["instance_name"]
-# # }

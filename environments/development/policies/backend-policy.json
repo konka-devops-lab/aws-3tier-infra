@@ -8,7 +8,7 @@
                 "ssm:GetParameters"
             ],
             "Resource": [
-                "arn:aws:ssm:us-east-1:522814728660:parameter/test/crud/*"
+                "arn:aws:ssm:us-east-1:522814728660:parameter/vm-setup/*"
             ]
         },
         {
@@ -17,8 +17,9 @@
                 "secretsmanager:GetSecretValue"
             ],
             "Resource": [
-                "arn:aws:secretsmanager:us-east-1:522814728660:secret:test/curd/db_crentials-KzEK0r"
+                "arn:aws:secretsmanager:us-east-1:522814728660:secret:vm-setup/test/DB-Cred-344OLS"
             ]
         }
     ]
 }
+

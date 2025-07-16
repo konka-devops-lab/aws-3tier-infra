@@ -15,7 +15,7 @@ resource "aws_launch_template" "foo" {
   ebs_optimized = true
 
   iam_instance_profile {
-    name = var.insance_profile
+    arn = var.iam_instance_profile_arn
   }
 
   image_id = var.image_id
@@ -26,8 +26,10 @@ resource "aws_launch_template" "foo" {
 
   key_name = var.key_name
 
+  
+
   monitoring {
-    enabled = true
+    enabled = var.monitoring_enable
   }
 
   vpc_security_group_ids = var.security_groups
@@ -43,7 +45,8 @@ resource "aws_launch_template" "foo" {
     )
   }
 
-  user_data = var.user_data
+   user_data =  base64encode(var.user_data)
+
 }
 
 resource "aws_autoscaling_group" "bar" {

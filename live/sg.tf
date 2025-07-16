@@ -8,15 +8,15 @@ module "bastion_sg" {
   sg_name          = var.sg["bastion_sg_name"]
   sg_description   = var.sg["bastion_sg_description"]
 }
-module "vpn_sg" {
-  source           = "../modules/sg"
-  environment      = var.common_vars["environment"]
-  application_name = var.common_vars["application_name"]
-  common_tags      = var.common_vars["common_tags"]
-  vpc_id           = module.vpc.vpc_id
-  sg_name          = var.sg["vpn_sg_name"]
-  sg_description   = var.sg["vpn_sg_description"]
-}
+# module "vpn_sg" {
+#   source           = "../modules/sg"
+#   environment      = var.common_vars["environment"]
+#   application_name = var.common_vars["application_name"]
+#   common_tags      = var.common_vars["common_tags"]
+#   vpc_id           = module.vpc.vpc_id
+#   sg_name          = var.sg["vpn_sg_name"]
+#   sg_description   = var.sg["vpn_sg_description"]
+# }
 module "rds_sg" {
   source           = "../modules/sg"
   environment      = var.common_vars["environment"]

@@ -1,9 +1,9 @@
 aws_region = "us-east-1"
 common_vars = {
   environment      = "development"
-  application_name = "tf-aws-3-tier-infra"
+  application_name = "carvo"
   common_tags = {
-    Project     = "tf-aws-3-tier-infra"
+    Project     = "carvo"
     Environment = "development"
     terraform   = "true"
     Owner       = "konka"
@@ -61,8 +61,7 @@ bastion_ec2 = {
   user_data                      = <<-EOF
         #!/bin/bash
         sudo dnf update -y
-        sudo dnf install tmux git tree -y
-        sudo dnf install redis6 -y
+        sudo dnf install tmux git tree telnet mariadb105 redis6 -y
         sudo systemctl enable redis6
         sudo systemctl start redis6
     EOF
@@ -102,44 +101,58 @@ elasticache = {
   ttl                     = "60"
 }
 
-# # internal_alb = {
-# #   lb_name                    = "backned"
-# #   enable_deletion_protection = false
-# #   choose_internal_external   = true
-# #   enable_zonal_shift         = false
-# #   load_balancer_type         = "application"
-# #   tg_port                    = 8080
-# #   health_check_path          = "/health"
-# #   enable_http                = true
-# #   enable_https               = false
-# #   record_name                = "dev-backend.konkas.tech"
-# # }
+internal_alb = {
+  lb_name                    = "backned"
+  enable_deletion_protection = false
+  choose_internal_external   = true
+  enable_zonal_shift         = false
+  load_balancer_type         = "application"
+  tg_port                    = 8080
+  health_check_path          = "/health"
+  enable_http                = true
+  enable_https               = false
+  record_name                = "dev-backend.konkas.tech"
+}
 
-# # lb_acm = {
-# #   domain_name       = "dev-expense.konkas.tech"
-# #   validation_method = "DNS"
-# # }
+lb_acm = {
+  domain_name       = "dev-expense.konkas.tech"
+  validation_method = "DNS"
+}
 
 
-# # external_alb = {
-# #   lb_name                   = "tffrontend"
-# #   enable_deletion_protection = false
-# #   choose_internal_external   = false
-# #   enable_zonal_shift         = false
-# #   load_balancer_type         = "application"
-# #   tg_port                    = 80
-# #   health_check_path          = "/"
-# #   enable_http                 = false
-# #   enable_https                = true
-# #   record_name                = "dev-expense.konkas.tech"
-# # }
+external_alb = {
+  lb_name                    = "frontend"
+  enable_deletion_protection = false
+  choose_internal_external   = false
+  enable_zonal_shift         = false
+  load_balancer_type         = "application"
+  tg_port                    = 80
+  health_check_path          = "/"
+  enable_http                = false
+  enable_https               = true
+  record_name                = "dev-expense.konkas.tech"
+}
 
-# # backend_role = {
-# #   role_name   = "BackendSecretsParameterStore"
-# #   policy_name = "BackendSecretsParameterStorePolicy"
-# # }
+backend_role = {
+  role_name   = "backendsecretsparameterstore"
+  policy_name = "backendsecretsparameterstorePolicy"
+}
 
-# # frontend_role = {
-# #   role_name   = "FrontendNgincConf"
-# #   policy_name = "FrontendNgincConfPolicy"
-# # }
+frontend_role = {
+  role_name   = "frontendngincconf"
+  policy_name = "frontendngincconfpolicy"
+}
+
+# backend_asg = {
+#   monitoring_enable = false
+#   min_size          = 1
+#   max_size          = 1
+#   desired_capacity  = 1
+#   instance_name     = "backend"
+#   target_value      = 20
+#   user_data         = <<-EOF
+#         #!/bin/bash
+#         sudo dnf update -y
+#         echo "Hello World"
+#     EOF
+# }

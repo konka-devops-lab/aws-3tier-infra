@@ -20,6 +20,21 @@ data "aws_ami" "amazon_linux" {
     values = ["ebs"]
   }
 }
+
+# data "aws_ami" "backend_ami" {
+#   most_recent = true
+#   owners      = ["522814728660"]
+
+#   filter {
+#     name   = "name"
+#     values = ["sivab-*"]
+#   }
+
+#   filter {
+#     name   = "root-device-type"
+#     values = ["ebs"]
+#   }
+# }
 # data "aws_ami" "openvpn" {
 #   most_recent = true
 #   owners      = ["679593333241"]
