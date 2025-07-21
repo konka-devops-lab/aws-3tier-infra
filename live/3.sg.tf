@@ -279,3 +279,42 @@ resource "aws_security_group_rule" "https_external_external_alb" {
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = module.external_alb_sg.sg_id
 }
+
+
+# variables
+variable "sg" {}
+
+
+# outputs
+output "bastion_sg_id" {
+  description = "The ID of the bastion security group"
+  value       = module.bastion_sg.sg_id
+}
+# output "vpn_sg_id" {
+#   description = "The ID of the VPN security group"
+#   value       = module.vpn_sg.sg_id
+# }
+output "rds_sg_id" {
+  description = "The ID of the RDS security group"
+  value       = module.rds_sg.sg_id
+}
+output "elastic_cache_sg_id" {
+  description = "The ID of the Elastic security group"
+  value       = module.elastic_cache_sg.sg_id
+}
+output "backend_sg_id" {
+  description = "The ID of the backend security group"
+  value       = module.backend_sg.sg_id
+}
+output "internal_alb_sg_id" {
+  description = "The ID of the internal ALB security group"
+  value       = module.internal_alb_sg.sg_id
+}
+output "external_alb_sg_id" {
+  description = "The ID of the external ALB security group"
+  value       = module.external_alb_sg.sg_id
+}
+output "frontend_sg_id" {
+  description = "The ID of the frontend security group"
+  value       = module.frontend_sg.sg_id
+}

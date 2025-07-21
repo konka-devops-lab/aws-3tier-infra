@@ -1,7 +1,8 @@
-aws_region = "us-east-1"
+
 common_vars = {
   environment      = "development"
   application_name = "carvo"
+  region = "us-east-1"
   common_tags = {
     Project     = "carvo"
     Environment = "development"
@@ -17,7 +18,7 @@ vpc = {
   private_subnet_cidr_blocks = ["10.1.11.0/24", "10.1.12.0/24"]
   db_subnet_cidr_blocks      = ["10.1.21.0/24", "10.1.22.0/24"]
   enable_nat_gateway         = true
-  enable_vpc_flow_logs_cw    = false
+  enable_vpc_flow_logs_cw    = true
 }
 # parameter_store = {
 #   parameters = {
@@ -143,16 +144,20 @@ frontend_role = {
   policy_name = "frontendngincconfpolicy"
 }
 
-# backend_asg = {
-#   monitoring_enable = false
-#   min_size          = 1
-#   max_size          = 1
-#   desired_capacity  = 1
-#   instance_name     = "backend"
-#   target_value      = 20
-#   user_data         = <<-EOF
-#         #!/bin/bash
-#         sudo dnf update -y
-#         echo "Hello World"
-#     EOF
-# }
+backend_asg = {
+  monitoring_enable = false
+  min_size          = 1
+  max_size          = 1
+  desired_capacity  = 1
+  instance_name     = "backend"
+  target_value      = 20
+}
+
+frontend_asg = {
+  monitoring_enable = false
+  min_size          = 1
+  max_size          = 1
+  desired_capacity  = 1
+  instance_name     = "frontend"
+  target_value      = 20
+}

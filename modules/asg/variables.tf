@@ -35,8 +35,8 @@ variable "key_name" {
   type        = string
 }
 variable "user_data" {
-  description = "User data script to run on instance launch"
-  type        = string
+  # description = "User data script to run on instance launch"
+  # type        = string
 }
 variable "security_groups" {
   description = "List of security group IDs to associate with the launch template"

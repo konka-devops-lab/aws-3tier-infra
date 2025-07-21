@@ -27,6 +27,11 @@ resource "aws_iam_role" "this" {
   )
 }
 
+resource "aws_iam_instance_profile" "backend_profile" {
+  name = local.name
+  role = aws_iam_role.this.name
+}
+
 resource "aws_iam_role_policy" "inline_policy" {
   name   = local.policy_name
   role   = aws_iam_role.this.id

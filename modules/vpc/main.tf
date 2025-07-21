@@ -248,6 +248,7 @@ resource "aws_flow_log" "example" {
 resource "aws_cloudwatch_log_group" "example" {
   count = var.enable_vpc_flow_logs_cw ? 1 : 0
   name  = "${local.common_name}-vpc-flow-logs-role-cw"
+  skip_destroy = true
 }
 
 
