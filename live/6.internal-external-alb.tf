@@ -19,15 +19,7 @@ module "internal-alb" {
   record_name                = var.internal_alb["record_name"]
 }
 
-module "lb_acm" {
-  source            = "../modules/acm"
-  environment       = var.common_vars["environment"]
-  project_name      = var.common_vars["application_name"]
-  common_tags       = var.common_vars["common_tags"]
-  domain_name       = var.lb_acm["domain_name"]
-  validation_method = var.lb_acm["validation_method"]
-  zone_id           = var.common_vars["zone_id"]
-}
+
 
 module "external-alb" {
   depends_on                 = [module.lb_acm]
@@ -53,11 +45,5 @@ module "external-alb" {
 }
 
 variable "internal_alb" {}
-variable "lb_acm" {}
+
 variable "external_alb" {}
-
-
-output "acm_certificate_arn" {
-  description = "The ARN of the ACM certificate"
-  value       = module.lb_acm.certificate_arn
-}
