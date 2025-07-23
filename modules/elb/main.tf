@@ -87,7 +87,7 @@ resource "aws_lb_target_group" "example" {
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
-    unhealthy_threshold = 2
+    unhealthy_threshold = 5
   }
 
   tags = merge(
@@ -98,8 +98,9 @@ resource "aws_lb_target_group" "example" {
   )
 }
 
+# Internal ALB (HTTP only)
 resource "aws_lb_listener" "http" {
-  count             = var.enable_http ? 1 : 0
+  count             = var.choose_internal_external && var.enable_http ? 1 : 0
   load_balancer_arn = aws_lb.test.arn
   port              = 80
   protocol          = "HTTP"
@@ -109,8 +110,10 @@ resource "aws_lb_listener" "http" {
     target_group_arn = aws_lb_target_group.example.arn
   }
 }
+
+# External ALB (HTTPS + HTTP with conditional rules)
 resource "aws_lb_listener" "https" {
-  count             = var.enable_https ? 1 : 0
+  count             = !var.choose_internal_external && var.enable_https ? 1 : 0
   load_balancer_arn = aws_lb.test.arn
   port              = 443
   protocol          = "HTTPS"
@@ -123,20 +126,44 @@ resource "aws_lb_listener" "https" {
   }
 }
 
-
-resource "aws_lb_listener" "redirection" {
-  count             = var.enable_https ? 1 : 0
+resource "aws_lb_listener" "http_external" {
+  count             = !var.choose_internal_external && var.enable_https ? 1 : 0
   load_balancer_arn = aws_lb.test.arn
   port              = 80
   protocol          = "HTTP"
 
+  # Default action is redirect
   default_action {
     type = "redirect"
-
     redirect {
       port        = "443"
       protocol    = "HTTPS"
       status_code = "HTTP_301"
+    }
+  }
+}
+
+# Rule to forward health checks on port 80
+resource "aws_lb_listener_rule" "health_check" {
+  depends_on = [aws_lb_listener.http_external]
+  count      = !var.choose_internal_external && var.enable_https ? 1 : 0
+  listener_arn = aws_lb_listener.http_external[0].arn
+  priority     = 100  # Higher priority than default
+
+  # Optional: Add conditions if needed (e.g., path_pattern, host_header)
+  condition {
+    path_pattern {
+      values = [var.health_check_path]
+    }
+  }
+
+  action {
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "Healthy"  # Custom response message
+      status_code  = "200"      # HTTP status code
     }
   }
 }

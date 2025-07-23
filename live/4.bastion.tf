@@ -41,9 +41,8 @@ module "bastion" {
   use_null_resource_for_userdata = var.bastion_ec2["use_null_resource_for_userdata"]
   remote_exec_user               = var.bastion_ec2["remote_exec_user"]
   key_name                       = var.bastion_ec2["key_name"]
-  user_data                      = var.bastion_ec2["user_data"]
+  user_data                      = file("${path.module}/../environments/${var.common_vars["environment"]}/scripts/bastion.sh")
 }
-
 variable "bastion_ec2" {}
 
 
@@ -84,6 +83,8 @@ variable "bastion_ec2" {}
 #   key_name                       = var.bastion_ec2["key_name"]
 
 #   depends_on = [module.vpc, module.vpn_sg]
-
 # }
 
+# variable "vpn_ec2" {
+
+# }

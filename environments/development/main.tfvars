@@ -59,13 +59,6 @@ bastion_ec2 = {
   instance_type                  = "t3.micro"
   key_name                       = "siva"
   monitoring                     = false
-  user_data                      = <<-EOF
-        #!/bin/bash
-        sudo dnf update -y
-        sudo dnf install tmux git tree telnet mariadb105 redis6 -y
-        sudo systemctl enable redis6
-        sudo systemctl start redis6
-    EOF
   use_null_resource_for_userdata = true
   remote_exec_user               = "ec2-user"
   iam_instance_profile           = ""
@@ -102,6 +95,16 @@ elasticache = {
   ttl                     = "60"
 }
 
+lb_acm = {
+  domain_name       = "dev-frontend.konkas.tech"
+  validation_method = "DNS"
+}
+
+cf_acm = {
+  domain_name       = "dev-expense.konkas.tech"
+  validation_method = "DNS"
+}
+
 internal_alb = {
   lb_name                    = "backned"
   enable_deletion_protection = false
@@ -114,18 +117,6 @@ internal_alb = {
   enable_https               = false
   record_name                = "dev-backend.konkas.tech"
 }
-
-lb_acm = {
-  domain_name       = "dev-frontend.konkas.tech"
-  validation_method = "DNS"
-}
-
-cf_acm = {
-  domain_name       = "dev-expense.konkas.tech"
-  validation_method = "DNS"
-}
-
-
 external_alb = {
   lb_name                    = "frontend"
   enable_deletion_protection = false
@@ -136,7 +127,7 @@ external_alb = {
   health_check_path          = "/"
   enable_http                = false
   enable_https               = true
-  record_name                = "dev-expense.konkas.tech"
+  record_name                = "dev-frontend.konkas.tech"
 }
 
 backend_role = {

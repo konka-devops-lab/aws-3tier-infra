@@ -69,7 +69,7 @@ module "frontend_asg" {
   image_id                 = data.aws_ami.frontend_ami.id
   subnet_ids               = module.vpc.private_subnet_ids
   target_group_arns        = [module.external-alb.target_group_arn]
-  security_groups          = [module.backend_sg.sg_id]
+  security_groups          = [module.frontend_sg.sg_id]
   monitoring_enable        = var.frontend_asg["monitoring_enable"]
   instance_name            = var.frontend_asg["instance_name"]
   user_data                = file("${path.module}/../environments/${var.common_vars["environment"]}/scripts/frontend.sh")

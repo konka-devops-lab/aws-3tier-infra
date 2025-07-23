@@ -53,7 +53,7 @@ resource "aws_autoscaling_group" "bar" {
   name                      = "${local.name}-asg"
   max_size                  = var.max_size
   min_size                  = var.min_size
-  health_check_grace_period = 300
+  health_check_grace_period = 60
   health_check_type         = "ELB"
   desired_capacity          = var.desired_capacity
   force_delete              = true
