@@ -33,9 +33,9 @@ resource "null_resource" "user_data_exec" {
   }
 
   depends_on = [aws_instance.example]
-  triggers = {
-    always_run = timestamp()
-  }
+  # triggers = {
+  #   always_run = timestamp()
+  # }
 }
 
 

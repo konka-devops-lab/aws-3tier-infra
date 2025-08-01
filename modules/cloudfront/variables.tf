@@ -1,19 +1,6 @@
-variable "domain_name" {
-  type = string
-}
-
-variable "origin_id" {
-  type = string
-}
-
 variable "aliases" {
   type    = list(string)
   default = []
-}
-
-variable "enabled" {
-  type    = bool
-  default = true
 }
 
 variable "acm_certificate_arn" {
@@ -23,5 +10,23 @@ variable "default_root_object" {
   type = string
   default = ""
 }
+variable "domain_name" {
+  
+}
+variable "common_tags" {
+  
+}
+variable "environment" {
+  
+}
+variable "application_name" {
+  
+}
 
-variable "invalidation_paths" {}
+variable "zone_id" {
+  
+}
+
+variable "record_name" {
+  
+}

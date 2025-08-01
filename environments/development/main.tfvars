@@ -157,3 +157,9 @@ frontend_asg = {
   instance_name     = "frontend"
   target_value      = 20
 }
+
+cdn = {
+  domain_name            ="dev-frontend.konkas.tech"
+  aliases              = ["dev-expense.konkas.tech"]
+  record_name          = "dev-expense.konkas.tech"
+}

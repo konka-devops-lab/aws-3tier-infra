@@ -1,8 +1,17 @@
-resource "aws_cloudfront_distribution" "s3_distribution" {
+locals {
+  common_name = "${var.environment}-${var.application_name}"
+}
+resource "aws_cloudfront_distribution" "distribution" {
 
     origin {
       domain_name = var.domain_name
-      origin_id = var.origin_id
+      origin_id = "alborigin"
+      custom_origin_config {
+        http_port              = 80
+        https_port             = 443
+        origin_protocol_policy = "https-only"
+        origin_ssl_protocols   = ["TLSv1.2"]
+      }
     }
 
     restrictions {
@@ -10,7 +19,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
             restriction_type = "none"
             locations        = []
         }
-}
+    }
 
   viewer_certificate {
     cloudfront_default_certificate = false
@@ -20,19 +29,45 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   default_cache_behavior {
-    target_origin_id       = "albOrigin"
-    viewer_protocol_policy = "redirect-http-to-https"
+    target_origin_id       = "alborigin"
+    viewer_protocol_policy = "redirect-to-https"
     allowed_methods = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods  = ["GET", "HEAD"]
+
+     forwarded_values {
+       query_string = true
+        cookies {
+          forward = "all"
+        }
+     }
   }
 
     aliases = var.aliases
-    enabled = var.enabled
+    enabled = true
     default_root_object = var.default_root_object
 
+    tags = merge(
+    var.common_tags,
+    {
+      Name = "${local.common_name}-vpc"
+    }
+  )
+}
+resource "null_resource" "invalidate_cloudfront" {
+
+    provisioner "local-exec" {
+    command = "aws cloudfront create-invalidation --distribution-id ${aws_cloudfront_distribution.distribution.id} --paths /*"
+  }
 }
 
-resource "aws_cloudfront_distribution_invalidation" "this" {
-  distribution_id = aws_cloudfront_distribution.this.id
-  paths           = var.invalidation_paths
+resource "aws_route53_record" "www" {
+  zone_id = var.zone_id
+  name    = var.record_name
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.distribution.domain_name
+    zone_id                = "Z2FDTNDATAQYW2"
+    evaluate_target_health = false
+  }
 }
