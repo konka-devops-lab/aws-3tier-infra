@@ -49,7 +49,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     tags = merge(
     var.common_tags,
     {
-      Name = "${local.common_name}-vpc"
+      Name = local.common_name
     }
   )
 }

@@ -40,7 +40,7 @@ module "backend_asg" {
   instance_type            = var.bastion_ec2["instance_type"]
   iam_instance_profile_arn = module.backend_role.instance_profile_arn
   image_id                 = data.aws_ami.backend_ami.id
-  subnet_ids               = module.vpc.private_subnet_ids
+  subnet_ids               = module.vpc.public_subnet_ids
   target_group_arns        = [module.internal-alb.target_group_arn]
   security_groups          = [module.backend_sg.sg_id]
   monitoring_enable        = var.backend_asg["monitoring_enable"]
@@ -67,7 +67,7 @@ module "frontend_asg" {
   instance_type            = var.bastion_ec2["instance_type"]
   iam_instance_profile_arn = module.frontend_role.instance_profile_arn
   image_id                 = data.aws_ami.frontend_ami.id
-  subnet_ids               = module.vpc.private_subnet_ids
+  subnet_ids               = module.vpc.public_subnet_ids
   target_group_arns        = [module.external-alb.target_group_arn]
   security_groups          = [module.frontend_sg.sg_id]
   monitoring_enable        = var.frontend_asg["monitoring_enable"]

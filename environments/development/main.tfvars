@@ -8,6 +8,7 @@ common_vars = {
     Environment = "development"
     terraform   = "true"
     Owner       = "konka"
+    Monitoring  = "true"
   }
   zone_id = "Z011675617HENPLWZ1EJC"
 }
@@ -17,8 +18,8 @@ vpc = {
   public_subnet_cidr_blocks  = ["10.1.1.0/24", "10.1.2.0/24"]
   private_subnet_cidr_blocks = ["10.1.11.0/24", "10.1.12.0/24"]
   db_subnet_cidr_blocks      = ["10.1.21.0/24", "10.1.22.0/24"]
-  enable_nat_gateway         = true
-  enable_vpc_flow_logs_cw    = true
+  enable_nat_gateway         = false
+  enable_vpc_flow_logs_cw    = false
 }
 # parameter_store = {
 #   parameters = {
@@ -138,6 +139,11 @@ backend_role = {
 frontend_role = {
   role_name   = "frontendngincconf"
   policy_name = "frontendngincconfpolicy"
+}
+
+prometheus_role = {
+  role_name   = "prometheusreadonly"
+  policy_name = "prometheusreadonlypolicy"
 }
 
 backend_asg = {

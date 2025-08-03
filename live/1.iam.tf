@@ -17,9 +17,19 @@ module "frontend_role" {
   policy_file  = "${path.module}/../environments/${var.common_vars["environment"]}/policies/frontend-policy.json"
 }
 
+module "prometheus_role" {
+  source       = "../modules/iam"
+  environment  = var.common_vars["environment"]
+  project_name = var.common_vars["application_name"]
+  common_tags  = var.common_vars["common_tags"]
+  role_name    = var.prometheus_role["role_name"]
+  policy_name  = var.prometheus_role["policy_name"]
+  policy_file  = "${path.module}/../environments/${var.common_vars["environment"]}/policies/prometheus-read-only-policy.json"
+}
+
 variable "backend_role" {}
 variable "frontend_role" {}
-
+variable "prometheus_role" {}
 
 output "backend_role_id" {
   description = "The ID of the backend IAM role"
@@ -53,4 +63,22 @@ output "frontend_instance_profile_arn" {
 output "frontend_instance_role_id" {
   description = "The ID of the frontend IAM role"
   value       = module.frontend_role.instance_profile_id
+}
+
+output "prometheus_role_id" {
+  description = "The ID of the prometheus IAM role"
+  value       = module.prometheus_role.role_id
+}
+output "prometheus_role_arn" {
+  description = "The ARN of the prometheus IAM role"
+  value       = module.prometheus_role.role_arn
+}
+
+output "prometheus_instance_profile_arn" {
+  description = "The ARN of the prometheus IAM instance profile"
+  value       = module.prometheus_role.instance_profile_arn
+}
+output "prometheus_instance_role_id" {
+  description = "The ID of the prometheus IAM role"
+  value       = module.prometheus_role.instance_profile_id
 }

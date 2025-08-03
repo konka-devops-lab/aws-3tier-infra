@@ -4,7 +4,7 @@ module "internal-alb" {
   project                    = var.common_vars["application_name"]
   common_tags                = var.common_vars["common_tags"]
   security_groups            = [module.internal_alb_sg.sg_id]
-  subnets                    = module.vpc.private_subnet_ids
+  subnets                    = module.vpc.public_subnet_ids
   vpc_id                     = module.vpc.vpc_id
   lb_name                    = var.internal_alb["lb_name"]
   enable_deletion_protection = var.internal_alb["enable_deletion_protection"]
