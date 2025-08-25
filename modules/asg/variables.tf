@@ -17,7 +17,7 @@ variable "instance_name" {
   description = "Instance name for tagging resources"
   type        = string
 }
-variable "iam_instance_profile_arn" {
+variable "instance_profile" {
   description = "ARN of the IAM instance profile to attach to the launch template"
   type        = string
   
@@ -35,8 +35,8 @@ variable "key_name" {
   type        = string
 }
 variable "user_data" {
-  # description = "User data script to run on instance launch"
-  # type        = string
+  description = "User data script to run on instance launch"
+  type        = string
 }
 variable "security_groups" {
   description = "List of security group IDs to associate with the launch template"

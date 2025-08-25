@@ -31,52 +31,13 @@ variable "backend_role" {}
 variable "frontend_role" {}
 variable "prometheus_role" {}
 
-output "backend_role_id" {
-  description = "The ID of the backend IAM role"
-  value       = module.backend_role.role_id
-}
-output "backend_role_arn" {
-  description = "The ARN of the backend IAM role"
-  value       = module.backend_role.role_arn
-}
 output "backend_instance_profile_id" {
   description = "The ID of the backend IAM instance profile"
   value       = module.backend_role.instance_profile_id
 }
-output "backend_instance_profile_arn" {
-  description = "The ARN of the backend IAM instance profile"
-  value       = module.backend_role.instance_profile_arn
-}
-output "frontend_role_id" {
-  description = "The ID of the frontend IAM role"
-  value       = module.frontend_role.role_id
-}
-output "frontend_role_arn" {
-  description = "The ARN of the frontend IAM role"
-  value       = module.frontend_role.role_arn
-}
-
-output "frontend_instance_profile_arn" {
-  description = "The ARN of the backend IAM instance profile"
-  value       = module.frontend_role.instance_profile_arn
-}
 output "frontend_instance_role_id" {
   description = "The ID of the frontend IAM role"
   value       = module.frontend_role.instance_profile_id
-}
-
-output "prometheus_role_id" {
-  description = "The ID of the prometheus IAM role"
-  value       = module.prometheus_role.role_id
-}
-output "prometheus_role_arn" {
-  description = "The ARN of the prometheus IAM role"
-  value       = module.prometheus_role.role_arn
-}
-
-output "prometheus_instance_profile_arn" {
-  description = "The ARN of the prometheus IAM instance profile"
-  value       = module.prometheus_role.instance_profile_arn
 }
 output "prometheus_instance_role_id" {
   description = "The ID of the prometheus IAM role"

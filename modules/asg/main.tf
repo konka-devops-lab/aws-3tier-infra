@@ -15,8 +15,8 @@ resource "aws_launch_template" "foo" {
   ebs_optimized = true
 
   iam_instance_profile {
-    arn = var.iam_instance_profile_arn
-  }
+    name = var.instance_profile
+  } 
 
   image_id = var.image_id
 

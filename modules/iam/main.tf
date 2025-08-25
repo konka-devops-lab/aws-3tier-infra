@@ -27,7 +27,7 @@ resource "aws_iam_role" "this" {
   )
 }
 
-resource "aws_iam_instance_profile" "backend_profile" {
+resource "aws_iam_instance_profile" "profile" {
   name = local.name
   role = aws_iam_role.this.name
 }

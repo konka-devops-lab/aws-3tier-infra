@@ -42,6 +42,7 @@ module "bastion" {
   remote_exec_user               = var.bastion_ec2["remote_exec_user"]
   key_name                       = var.bastion_ec2["key_name"]
   user_data                      = file("${path.module}/../environments/${var.common_vars["environment"]}/scripts/bastion.sh")
+  depends_on                     = [module.rds]
 }
 variable "bastion_ec2" {}
 

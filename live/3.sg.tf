@@ -72,6 +72,15 @@ module "frontend_sg" {
   sg_name          = var.sg["frontend_sg_name"]
   sg_description   = var.sg["frontend_sg_description"]
 }
+module "prometheus_sg" {
+  source           = "../modules/sg"
+  environment      = var.common_vars["environment"]
+  application_name = var.common_vars["application_name"]
+  common_tags      = var.common_vars["common_tags"]
+  vpc_id           = module.vpc.vpc_id
+  sg_name          = var.sg["prometheus_sg_name"]
+  sg_description   = var.sg["prometheus_sg_description"]
+}
 
 # Bastion SG Rules
 resource "aws_security_group_rule" "example" {
@@ -252,7 +261,7 @@ resource "aws_security_group_rule" "frontend_internal_alb" {
   source_security_group_id = module.frontend_sg.sg_id
   security_group_id        = module.internal_alb_sg.sg_id
 }
-# Frotend SG Rules
+# Frontend SG Rules
 resource "aws_security_group_rule" "vpn_frontend" {
   description              = "This rule allows all traffic from 80 from vpn"
   type                     = "ingress"
@@ -321,6 +330,53 @@ resource "aws_security_group_rule" "https_external_external_alb" {
   security_group_id = module.external_alb_sg.sg_id
 }
 
+# Prometheus SG Rules
+resource "aws_security_group_rule" "prometheus_port" {
+  description       = "This rule allow 9090 from internet"
+  type              = "ingress"
+  from_port         = 9090
+  to_port           = 9090
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.prometheus_sg.sg_id
+}
+resource "aws_security_group_rule" "ssh_prometheus" {
+  description       = "This rule allow 22 from internet"
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.prometheus_sg.sg_id
+}
+resource "aws_security_group_rule" "alertmanager_port" {
+  description       = "This rule allow 9093 from internet"
+  type              = "ingress"
+  from_port         = 9093
+  to_port           = 9093
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.prometheus_sg.sg_id
+}
+resource "aws_security_group_rule" "grafana_port" {
+  description       = "This rule allow 3000 from internet"
+  type              = "ingress"
+  from_port         = 3000
+  to_port           = 3000
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.prometheus_sg.sg_id
+}
+
+resource "aws_security_group_rule" "exporters_scrapers" {
+  description       = "This rule allow 9100-9200 from internet"
+  type              = "ingress"
+  from_port         = 9100
+  to_port           = 9200
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = module.prometheus_sg.sg_id
+}
 
 # variables
 variable "sg" {}
@@ -358,4 +414,9 @@ output "external_alb_sg_id" {
 output "frontend_sg_id" {
   description = "The ID of the frontend security group"
   value       = module.frontend_sg.sg_id
+}
+
+output "prometheus_sg_id" {
+  description = "The ID of the Prometheus security group"
+  value       = module.prometheus_sg.sg_id
 }

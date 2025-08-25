@@ -8,6 +8,7 @@ module "cdn-3-tier" {
   acm_certificate_arn = module.cf_acm.certificate_arn
   zone_id             = var.common_vars["zone_id"]
   record_name         = var.cdn["record_name"]
+  depends_on          = [module.cf_acm]
 }
 
 

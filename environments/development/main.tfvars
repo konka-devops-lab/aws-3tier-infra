@@ -18,7 +18,7 @@ vpc = {
   public_subnet_cidr_blocks  = ["10.1.1.0/24", "10.1.2.0/24"]
   private_subnet_cidr_blocks = ["10.1.11.0/24", "10.1.12.0/24"]
   db_subnet_cidr_blocks      = ["10.1.21.0/24", "10.1.22.0/24"]
-  enable_nat_gateway         = false
+  enable_nat_gateway         = true
   enable_vpc_flow_logs_cw    = false
 }
 # parameter_store = {
@@ -53,6 +53,9 @@ sg = {
 
   external_alb_sg_name        = "External-ALB"
   external_alb_sg_description = "External_ALB SG"
+
+  prometheus_sg_name = "Prometheus"
+  prometheus_sg_description = "Prometheus SG"
 }
 
 bastion_ec2 = {
@@ -102,7 +105,7 @@ lb_acm = {
 }
 
 cf_acm = {
-  domain_name       = "dev-expense.konkas.tech"
+  domain_name       = "dev-carvo.konkas.tech"
   validation_method = "DNS"
 }
 
@@ -166,6 +169,15 @@ frontend_asg = {
 
 cdn = {
   domain_name            ="dev-frontend.konkas.tech"
-  aliases              = ["dev-expense.konkas.tech"]
-  record_name          = "dev-expense.konkas.tech"
+  aliases              = ["dev-carvo.konkas.tech"]
+  record_name          = "dev-carvo.konkas.tech"
+}
+
+prometheus_ec2 = {
+  instance_name                  = "prometheus"
+  instance_type                  = "t3a.medium"
+  key_name                       = "siva"
+  monitoring                     = false
+  use_null_resource_for_userdata = true
+  remote_exec_user               = "ec2-user"
 }
